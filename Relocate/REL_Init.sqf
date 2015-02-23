@@ -13,6 +13,7 @@ REL_Precompile_Functions =
 	PRECOMPILE("REL/REL_Settings.sqf");
 	DEBUG
 	{
+		// Compiling Debug functions only if debug is enabled.
 		PRECOMPILE("REL/REL_Debug.sqf");
 	};
 	PRECOMPILE("REL/REL_Functions.sqf");
