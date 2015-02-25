@@ -18,3 +18,9 @@ REL_Debug_Log =
 		player sideChat format _message;
 	};
 };
+
+REL_Debug_RPT =
+{
+	FUN_ARGS_1(_message);
+	[_message,true,false,false,false,false] call REL_Debug_Log;
+};
