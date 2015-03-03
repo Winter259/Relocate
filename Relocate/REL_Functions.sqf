@@ -44,6 +44,7 @@ REL_LeaderIsValid =
 REL_PassOnAction =
 {
 	FUN_ARGS_1(_group);
+	[[""]]
 	if (!([_group] call REL_LeaderIsValid)) then
 	{
 		{
