@@ -7,6 +7,7 @@ REL_Init =
 	[] call REL_DetermineVersion;
 	[] call REL_Precompile_Functions;
 	[["Relocate version %1 has successfully initialised for ArmA %2.",REL_VERSION_STR,REL_ArmaVersion]] call REL_Debug_RPT;
+	[] call REL_GroupDeployLogEH;
 	REL_Initialised = true;
 	publicVariable "REL_Initialised";
 	sleep 2; // to remove
@@ -23,7 +24,7 @@ REL_Precompile_Functions =
 {
 	PRECOMPILE("Relocate\REL_Debug.sqf");
 	PRECOMPILE("Relocate\REL_Settings.sqf");
-	PRECOMPILE("Relocate\REL_Functions.sqf");
+	PRECOMPILE("Relocate\REL_Server_Functions.sqf");
 	PRECOMPILE("Relocate\REL_Addactions.sqf");
 };
 

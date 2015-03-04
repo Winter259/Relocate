@@ -38,12 +38,15 @@ REL_IsLeader =
 	{
 		_gearClass = _player getVariable "hull3_gear_class";
 	};
+	if (!isNil "_gearClass") then
 	{
-		if (_gearClass == _x) then
 		{
-			_leader = true;
-		};
-	} forEach HULL_LEADER_ARRAY;
+			if (_gearClass == _x) then
+			{
+				_leader = true;
+			};
+		} forEach HULL_LEADER_ARRAY;
+	};
 	[["%1 is a leader: %2",_player,_leader]] call REL_Debug_Hint;
 	[["%1 is a leader: %2",_player,_leader]] call REL_Debug_RPT;
 	_leader;
@@ -69,10 +72,7 @@ REL_AssignDeploy =
 {
 	[["Assigning group deploy to all leaders now"]] call REL_Debug_Hint;
 	{
-		if (isPlayer _x) then
-		{
-			[_x] call REL_AssignToLeader;
-		};
+		[_x] call REL_AssignToLeader;
 		sleep 0.1;
 	} forEach allUnits;
 	// BELOW IS FOR DEBUG
