@@ -3,10 +3,7 @@
 REL_GiveDeploy_Addaction =
 {
 	FUN_ARGS_1(_player);
-	if (local _player) then
-	{
-		_player addaction ["<t color ='#00BFFF'>Deploy Group</t>","Relocate\REL_Deploy.sqf",nil,10,true,true,"","(_target == _this) && REL_DeployAllowed"];
-	};
+	_player addaction ["<t color ='#00BFFF'>Deploy Group</t>","Relocate\REL_Deploy.sqf",nil,10,true,true,"","(_target == _this) && REL_DeployAllowed"];
 };
 
 REL_GiveDeploy_AGMInteract =
@@ -63,13 +60,16 @@ REL_AssignToLeader =
 REL_GiveDeployAction = 
 {
 	FUN_ARGS_1(_player);
-	if (REL_UseAGMInteract) then
+	if (local _player) then
 	{
-		[_player] call REL_GiveDeploy_AGMInteract;
-	}
-	else
-	{
-		[_player] call REL_GiveDeploy_Addaction;
+		if (REL_UseAGMInteract) then
+		{
+			[_player] call REL_GiveDeploy_AGMInteract;
+		}
+		else
+		{
+			[_player] call REL_GiveDeploy_Addaction;
+		};
 	};
 };
 
