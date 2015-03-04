@@ -5,38 +5,93 @@ REL_GiveDeployAction =
 	FUN_ARGS_1(_player);
 	if (REL_UseAGMInteract) then
 	{
-		[_player] call REL_AddDeployAGMInteract;
+		[_player] call REL_GiveDeploy_AGMInteract;
 	}
 	else
 	{
-		[_player] call REL_AddDeployAddaction;
+		[_player] call REL_GiveDeploy_Addaction;
 	};
 };
 
-REL_AddDeployAddaction =
+REL_GiveDeploy_Addaction =
 {
 	FUN_ARGS_1(_player);
-	_player addaction ["<t color ='#00BFFF'>Deploy Group</t>","REL_Deploy.sqf",nil,10,true,true,"","(_target == _this) && REL_DeployAllowed"];
+	_player addaction ["<t color ='#00BFFF'>Deploy Group</t>","Relocate\REL_Deploy.sqf",nil,10,true,true,"","(_target == _this) && REL_DeployAllowed"];
 };
 
-REL_AddDeployAGMInteract =
+REL_GiveDeploy_AGMInteract =
 {
 	FUN_ARGS_1(_player);
-	
+	// TO DO
+};
+
+REL_IsLeader =
+{
+	FUN_ARGS_1(_player);
+	PVT_1(_gearClass);
+	DECLARE(_leader) = false;
+	if (REL_ArmaVersion == 2) then
+	{
+		_gearClass = _player getVariable "hull_gear_class";
+	}
+	else
+	{
+		_gearClass = _player getVariable "hull3_gear_class";
+	};
+	{
+		if (_gearClass == _x) then
+		{
+			_leader = true;
+		};
+	} forEach HULL_LEADER_ARRAY;
+	[["%1 is a leader: %2",_player,_leader]] call REL_Debug_Hint;
+	[["%1 is a leader: %2",_player,_leader]] call REL_Debug_RPT;
+	_leader;
+};
+
+REL_AssignToLeader =
+{
+	FUN_ARGS_1(_player);
+	if ([_player] call REL_IsLeader) then
+	{
+		if ([_player] call REL_PlayerIsValid) then
+		{
+			[_player] call REL_GiveDeployAction;
+		}
+		else
+		{
+			[_player] call REL_PassOnAction;
+		};
+	};
+};
+
+REL_AssignDeploy =
+{
+	[["Assigning group deploy to all leaders now"]] call REL_Debug_Hint;
+	{
+		if (isPlayer _x) then
+		{
+			[_x] call REL_AssignToLeader;
+		};
+		sleep 0.1;
+	} forEach allUnits;
+	// BELOW IS FOR DEBUG
+	sleep 2;
+	REL_DeployAllowed = true;
+	publicVariable "REL_DeployAllowed";
 };
 
 /*
 // FOR REFERENCE FOR THE AGM INTERACTION
 class AGM_SelfActions {
-      class AGM_Medical {
-        displayName = "$STR_AGM_Medical_Treat_Self";
-        condition = "_player getVariable ['AGM_isTreatable', true]";
-        statement = "";
-        showDisabled = 1;
-        enableInside = 1;
-        priority = 6;
-        icon = "AGM_Medical\UI\Medical_Icon_ca.paa";
-        subMenu[] = {"AGM_Medical", 1};
-        hotkey = "T";
-		
-		*/
+class AGM_Medical {
+displayName = "$STR_AGM_Medical_Treat_Self";
+condition = "_player getVariable ['AGM_isTreatable', true]";
+statement = "";
+showDisabled = 1;
+enableInside = 1;
+priority = 6;
+icon = "AGM_Medical\UI\Medical_Icon_ca.paa";
+subMenu[] = {"AGM_Medical", 1};
+hotkey = "T";
+*/

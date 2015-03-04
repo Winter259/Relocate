@@ -4,22 +4,22 @@ REL_Debug_Log =
 {
 	DEBUG
 	{
-		FUN_ARGS_4(_message,_rpt,_hint,_hint_silent,_sidechat);
+		FUN_ARGS_5(_message,_rpt,_hint,_hint_silent,_sidechat);
 		if (_rpt) then
 		{
-			diag_log format _message;
+			diag_log format ["%1%2",DEBUG_HEADER,(format _message)];
 		};
 		if (_hint) then
 		{
-			hint format _message;
+			hint format ["%1%2",DEBUG_HEADER,(format _message)];
 		};
 		if (_hint_silent) then
 		{
-			hintSilent format _message;
+			hintSilent format ["%1%2",DEBUG_HEADER,(format _message)];
 		};
 		if (_sidechat) then
 		{
-			player sideChat format _message;
+			player sideChat format ["%1%2",DEBUG_HEADER,(format _message)];
 		};
 	};
 };

@@ -1,11 +1,11 @@
 #include "REL_Macros.h"
 
 // Add:
-// [] execVM "REL/REL_Compile.sqf"
+// null = [] execVM "REL/REL_Compile.sqf";
 // to your init.sqf
 
 if (isServer) then
 {
-	PRECOMPILE("REL/REL_Init.sqf");
+	PRECOMPILE("Relocate\REL_Init.sqf");
 	[] call REL_Init;
 };

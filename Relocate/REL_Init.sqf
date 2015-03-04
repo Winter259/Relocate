@@ -6,9 +6,11 @@ REL_Init =
 	[] call REL_InitVariables;
 	[] call REL_DetermineVersion;
 	[] call REL_Precompile_Functions;
-	[["Relocate version %1 has successfully initialised for ArmA %2.",REL_ArmaVersion_STR,REL_ArmaVersion]] call REL_Debug_RPT;
+	[["Relocate version %1 has successfully initialised for ArmA %2.",REL_VERSION_STR,REL_ArmaVersion]] call REL_Debug_RPT;
 	REL_Initialised = true;
 	publicVariable "REL_Initialised";
+	sleep 2; // to remove
+	[] call REL_AssignDeploy;
 };
 
 REL_InitVariables =
@@ -19,20 +21,22 @@ REL_InitVariables =
 
 REL_Precompile_Functions =
 {
-	PRECOMPILE("REL/REL_Debug.sqf");
-	PRECOMPILE("REL/REL_Settings.sqf");
-	PRECOMPILE("REL/REL_Functions.sqf");
+	PRECOMPILE("Relocate\REL_Debug.sqf");
+	PRECOMPILE("Relocate\REL_Settings.sqf");
+	PRECOMPILE("Relocate\REL_Functions.sqf");
+	PRECOMPILE("Relocate\REL_Addactions.sqf");
 };
 
 REL_DetermineVersion =
 {
-	DECLARE(_version) = (productVersion select 1);
-	if ("2" in _version) then
+	if (isNil {call compile "blufor"}) then
 	{
 		REL_ArmaVersion = 2;
+		WAIT_DELAY(1,hull_isInitialized;);
 	}
 	else
 	{
 		REL_ArmaVersion = 3;
+		WAIT_DELAY(1,hull3_isInitialized;);
 	};
 };
