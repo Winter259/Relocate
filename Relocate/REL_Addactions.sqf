@@ -30,7 +30,7 @@ REL_IsLeader =
 	FUN_ARGS_1(_player);
 	PVT_1(_gearClass);
 	DECLARE(_leader) = false;
-	if (REL_ArmaVersion == 2) then
+	if (IS_ARMA2) then
 	{
 		_gearClass = _player getVariable "hull_gear_class";
 	}
@@ -75,10 +75,6 @@ REL_AssignDeploy =
 		[_x] call REL_AssignToLeader;
 		sleep 0.1;
 	} forEach allUnits;
-	// BELOW IS FOR DEBUG
-	sleep 2;
-	REL_DeployAllowed = true;
-	publicVariable "REL_DeployAllowed";
 };
 
 /*

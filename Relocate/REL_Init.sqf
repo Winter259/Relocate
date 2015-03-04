@@ -12,6 +12,7 @@ REL_Init =
 	publicVariable "REL_Initialised";
 	sleep 2; // to remove
 	[] call REL_AssignDeploy;
+	[] spawn REL_WaitForHullSafetyOff;
 };
 
 REL_InitVariables =

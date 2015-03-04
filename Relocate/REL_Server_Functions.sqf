@@ -50,3 +50,27 @@ REL_PassOnAction =
 		};
 	} forEach units _group;
 };
+
+REL_WaitForHullSafetyOff =
+{
+	if (IS_ARMA2) then
+	{
+		waitUntil
+		{
+			sleep 1;
+			[] call hull_mission_fnc_hasSafetyTimerEnded;
+		};
+	}
+	else
+	{
+		waitUntil
+		{
+			sleep 1;
+			[] call hull3_mission_fnc_hasSafetyTimerEnded;
+		};
+	};
+	sleep 1;
+	[["Relocate has been activated."]] call REL_Debug_RPT;
+	REL_DeployAllowed = true;
+	publicVariable "REL_DeployAllowed";
+};

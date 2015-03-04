@@ -15,6 +15,9 @@
 #define HC_NAMES				["HC","HeadlessClient"]
 #define isHC(VAR)				((name VAR) in HC_NAMES)
 
+#define IS_ARMA2				(REL_ArmaVersion == 2)
+#define IS_ARMA3				(REL_ArmaVersion == 3)
+
 #define BLU			west
 #define OPF			east
 #define IND			resistance
