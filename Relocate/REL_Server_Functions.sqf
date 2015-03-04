@@ -46,7 +46,9 @@ REL_PassOnAction =
 		if ([_x] call REL_PlayerIsValid) exitWith
 		{
 			[["Action has been passed on to: %1",_x]] call REL_Debug_Hint;
-			[_x] call REL_GiveDeployAction;
+			//[_x] call REL_GiveDeployAction;
+			// Has to be run semi-/globally
+			[-1, {[_this] call REL_GiveDeployAction;}, _x] call CBA_fnc_globalExecute;
 		};
 	} forEach units _group;
 };

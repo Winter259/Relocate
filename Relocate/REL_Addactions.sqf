@@ -1,22 +1,12 @@
 #include "REL_Macros.h"
 
-REL_GiveDeployAction = 
-{
-	FUN_ARGS_1(_player);
-	if (REL_UseAGMInteract) then
-	{
-		[_player] call REL_GiveDeploy_AGMInteract;
-	}
-	else
-	{
-		[_player] call REL_GiveDeploy_Addaction;
-	};
-};
-
 REL_GiveDeploy_Addaction =
 {
 	FUN_ARGS_1(_player);
-	_player addaction ["<t color ='#00BFFF'>Deploy Group</t>","Relocate\REL_Deploy.sqf",nil,10,true,true,"","(_target == _this) && REL_DeployAllowed"];
+	if (local _player) then
+	{
+		_player addaction ["<t color ='#00BFFF'>Deploy Group</t>","Relocate\REL_Deploy.sqf",nil,10,true,true,"","(_target == _this) && REL_DeployAllowed"];
+	};
 };
 
 REL_GiveDeploy_AGMInteract =
@@ -59,12 +49,27 @@ REL_AssignToLeader =
 	{
 		if ([_player] call REL_PlayerIsValid) then
 		{
-			[_player] call REL_GiveDeployAction;
+			//[_player] call REL_GiveDeployAction;
+			// Has to be run semi-/globally
+			[-1, {[_this] call REL_GiveDeployAction;}, _player] call CBA_fnc_globalExecute;
 		}
 		else
 		{
 			[_player] call REL_PassOnAction;
 		};
+	};
+};
+
+REL_GiveDeployAction = 
+{
+	FUN_ARGS_1(_player);
+	if (REL_UseAGMInteract) then
+	{
+		[_player] call REL_GiveDeploy_AGMInteract;
+	}
+	else
+	{
+		[_player] call REL_GiveDeploy_Addaction;
 	};
 };
 
