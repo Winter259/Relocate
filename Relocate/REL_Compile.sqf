@@ -1,7 +1,7 @@
 #include "REL_Macros.h"
 
 // Add:
-// null = [] execVM "REL/Relocate_Compile.sqf";
+// null = [] execVM "Relocate\REL_Compile.sqf";
 // to your init.sqf
 
 REL_Group_Deployment = [];
