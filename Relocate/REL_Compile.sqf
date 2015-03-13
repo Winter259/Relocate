@@ -8,7 +8,7 @@ REL_Group_Deployment = [];
 
 if (isServer) then
 {
-	PRECOMPILE("Relocate\Relocate_Init.sqf");
+	PRECOMPILE("Relocate\REL_Init.sqf");
 	[] call REL_Init;
 }
 else
