@@ -98,10 +98,3 @@ REL_WaitForHullSafetyOff =
 	REL_DeployAllowed = true;
 	publicVariable "REL_DeployAllowed";
 };
-
-REL_IsPlayerAGMInteractValid =
-{
-	FUN_ARGS_1(_player);
-	DECLARE(_valid) = _player getVariable ["REL_AGM_INTERACT_VALID",false];
-	_valid;
-};

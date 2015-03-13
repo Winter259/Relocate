@@ -17,10 +17,12 @@ if (isServer) then
 }
 else
 {
+	PRECOMPILE("Relocate\REL_Init.sqf");
 	PRECOMPILE("Relocate\REL_Settings.sqf");
 	PRECOMPILE("Relocate\REL_Client_Functions.sqf");
 	PRECOMPILE("Relocate\REL_Addactions.sqf");
 	PRECOMPILE("Relocate\REL_Debug.sqf");
+	PRECOMPILE("Relocate\REL_Common_Functions.sqf");
 };
 
 if (!isMultiplayer) then
@@ -29,4 +31,5 @@ if (!isMultiplayer) then
 	PRECOMPILE("Relocate\REL_Client_Functions.sqf");
 	PRECOMPILE("Relocate\REL_Addactions.sqf");
 	PRECOMPILE("Relocate\REL_Debug.sqf");
+	PRECOMPILE("Relocate\REL_Common_Functions.sqf");
 };

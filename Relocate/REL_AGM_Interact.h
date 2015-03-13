@@ -5,7 +5,7 @@ class CfgVehicles {
     class AGM_SelfActions {
 		class REL_AGM_Deploy {
         displayName = "Deploy Group";
-        condition = "REL_DeployAllowed && ([_player] call REL_IsPlayerAGMInteractValid)";
+        condition = "REL_DeployAllowed && !([_player] call REL_GetPlayerDeployedStatus)";
         statement = "[_player] call REL_AssignAGMDeployClick;";
         showDisabled = 1;
         priority = 5;
