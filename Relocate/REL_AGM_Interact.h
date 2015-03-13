@@ -10,7 +10,7 @@ class CfgVehicles {
         showDisabled = 1;
         priority = 5;
         icon = "\AGM_Interaction\UI\team\team_management_ca.paa"; // Will probably keep this
-        //subMenu[] = {"Group Deploy", 1};
+        //subMenu[] = {"ARK Inhouse", 1}; // for future consideration
         enableInside = 0;
         hotkey = "D";
 	};
