@@ -3,9 +3,9 @@
 #ifndef REL_MACROS_H
 #define REL_MACROS_H
 
-#define REL_VERSION			0.1
-#define REL_VERSION_STR		"0.1.0"
-#define REL_VERSION_ARRAY	{0,1,0}
+#define REL_VERSION			0.2
+#define REL_VERSION_STR		"0.2.0"
+#define REL_VERSION_ARRAY	{0,2,0}
 
 #define PRECOMPILE(SCRIPT) 		call compile preProcessFileLineNumbers SCRIPT 
 #define WAIT(CODE) 				waitUntil {CODE}
