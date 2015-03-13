@@ -42,7 +42,7 @@ REL_DetermineVersion =
 			REL_HullPresent = true;
 			publicVariable "REL_HullPresent";
 		};
-	};
+	}
 	else
 	{
 		REL_ArmaVersion = 3;
