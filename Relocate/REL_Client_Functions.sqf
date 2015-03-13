@@ -4,7 +4,10 @@ REL_DeployGroup =
 {
 	FUN_ARGS_3(_player,_position,_actionID);
 	DECLARE(_group) = group _player;
-	[_player,_actionID] call REL_RemoveDeploy;
+	if (!isNil "_actionID") then
+	{
+		[_player,_actionID] call REL_RemoveDeploy;
+	};
 	REL_Group_Deployment = [_player,_position];
 	publicVariableServer "REL_Group_Deployment";
 	DECLARE(_side) = side _group;
@@ -19,6 +22,13 @@ REL_DeployGroup =
 	} forEach units _group;
 };
 
+REL_AssignAGMDeployClick =
+{
+	FUN_ARGS_1(_player);
+	DECLARE(_group) = group _player;
+	[_player] onMapSingleClick {[(_this select 0),_pos,nil] call REL_DeployGroup;};
+};
+
 REL_AssignDeployClick =
 {
 	FUN_ARGS_2(_player,_actionID);
@@ -31,4 +41,11 @@ REL_RemoveDeploy =
 	FUN_ARGS_2(_player,_actionID);
 	_player removeAction _actionID;
 	onMapSingleClick "";
+};
+
+REL_IsPlayerAGMInteractValid =
+{
+	FUN_ARGS_1(_player);
+	DECLARE(_valid) = _player getVariable ["REL_AGM_INTERACT_VALID",false];
+	_valid;
 };

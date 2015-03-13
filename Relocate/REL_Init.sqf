@@ -34,11 +34,11 @@ REL_DetermineVersion =
 	if (isNil {call compile "blufor"}) then
 	{
 		REL_ArmaVersion = 2;
-		WAIT_DELAY(1,hull_isInitialized;);
+		//WAIT_DELAY(1,hull_isInitialized;);
 	}
 	else
 	{
 		REL_ArmaVersion = 3;
-		WAIT_DELAY(1,hull3_isInitialized;);
+		//WAIT_DELAY(1,hull3_isInitialized;);
 	};
 };

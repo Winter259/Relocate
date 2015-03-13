@@ -4,6 +4,10 @@
 // null = [] execVM "Relocate\REL_Compile.sqf";
 // to your init.sqf
 
+// Add:
+// #include "Relocate\REL_AGM_Interact.h";
+// to your description.ext
+
 REL_Group_Deployment = [];
 
 if (isServer) then

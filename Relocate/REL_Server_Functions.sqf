@@ -74,6 +74,7 @@ REL_PassOnAction =
 
 REL_WaitForHullSafetyOff =
 {
+	/*
 	if (IS_ARMA2) then
 	{
 		waitUntil
@@ -90,7 +91,17 @@ REL_WaitForHullSafetyOff =
 			[] call hull3_mission_fnc_hasSafetyTimerEnded;
 		};
 	};
+	*/
+	sleep 5;
+	hint "RELOCATE IS ON";
 	[["Relocate has been activated."]] call REL_Debug_RPT;
 	REL_DeployAllowed = true;
 	publicVariable "REL_DeployAllowed";
+};
+
+REL_IsPlayerAGMInteractValid =
+{
+	FUN_ARGS_1(_player);
+	DECLARE(_valid) = _player getVariable ["REL_AGM_INTERACT_VALID",false];
+	_valid;
 };

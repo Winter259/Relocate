@@ -9,7 +9,7 @@ REL_GiveDeploy_Addaction =
 REL_GiveDeploy_AGMInteract =
 {
 	FUN_ARGS_1(_player);
-	// TO DO
+	_player setVariable ["REL_AGM_INTERACT_VALID",true];
 };
 
 REL_IsLeader =
@@ -19,12 +19,13 @@ REL_IsLeader =
 	DECLARE(_leader) = false;
 	if (IS_ARMA2) then
 	{
-		_gearClass = _player getVariable "hull_gear_class";
+		//_gearClass = _player getVariable "hull_gear_class";
 	}
 	else
 	{
-		_gearClass = _player getVariable "hull3_gear_class";
+		//_gearClass = _player getVariable "hull3_gear_class";
 	};
+	/*
 	if (!isNil "_gearClass") then
 	{
 		{
@@ -34,6 +35,8 @@ REL_IsLeader =
 			};
 		} forEach HULL_LEADER_ARRAY;
 	};
+	*/
+	_leader = true;
 	[["%1 is a leader: %2",_player,_leader]] call REL_Debug_Hint;
 	[["%1 is a leader: %2",_player,_leader]] call REL_Debug_RPT;
 	_leader;
