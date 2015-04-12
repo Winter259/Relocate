@@ -72,17 +72,17 @@ REL_PassOnAction =
 	*/
 };
 
-REL_WaitForHullSafetyOff =
+REL_WaitForRelocateActive =
 {
-	if (IS_ARMA2) then
+	if (IS_ARMA2 && REL_HullPresent) then
 	{
 		waitUntil
 		{
 			sleep 1;
 			[] call hull_mission_fnc_hasSafetyTimerEnded;
 		};
-	}
-	else
+	};
+	if (IS_ARMA3 && REL_HullPresent) then
 	{
 		waitUntil
 		{
@@ -90,6 +90,12 @@ REL_WaitForHullSafetyOff =
 			[] call hull3_mission_fnc_hasSafetyTimerEnded;
 		};
 	};
+	if (!REL_HullPresent) then
+	{
+		// Add enable addaction to host, for a future version
+	};
+	sleep 5;
+	hint "Relocate has been activated."; // This only appears in the editor.
 	[["Relocate has been activated."]] call REL_Debug_RPT;
 	REL_DeployAllowed = true;
 	publicVariable "REL_DeployAllowed";

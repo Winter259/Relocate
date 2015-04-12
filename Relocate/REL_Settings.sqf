@@ -6,7 +6,7 @@ REL_IND_AllowDeploy 	= false;
 REL_CIV_AllowDeploy 	= true;
 
 */
-REL_UseAGMInteract = false;
 
+REL_UseAGMInteract = false;
 
 REL_Debug = true;
