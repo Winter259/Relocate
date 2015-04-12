@@ -9,7 +9,7 @@ REL_FindEmptyPosition =
 };
 */
 
-REL_GroupDeployLogEH =
+REL_EH_AssignDeployLogging =
 {
 	"REL_Group_Deployment" addPublicVariableEventHandler
 	{

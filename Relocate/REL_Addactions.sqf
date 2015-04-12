@@ -6,6 +6,14 @@ REL_GiveDeploy_Addaction =
 	_player addaction ["<t color ='#00BFFF'>Deploy Group</t>","Relocate\REL_Deploy.sqf",nil,10,true,true,"","(_target == _this) && REL_DeployAllowed && !([_target] call REL_GetPlayerDeployedStatus)"];
 };
 
+REL_CompileLeaderArray =
+{
+	REL_LeaderArray = [];
+	{
+		
+	} forEach allUnits;
+};
+
 REL_IsLeader =
 {
 	FUN_ARGS_1(_player);
@@ -13,13 +21,12 @@ REL_IsLeader =
 	DECLARE(_leader) = false;
 	if (IS_ARMA2) then
 	{
-		//_gearClass = _player getVariable "hull_gear_class";
+		_gearClass = _player getVariable "hull_gear_class";
 	}
 	else
 	{
-		//_gearClass = _player getVariable "hull3_gear_class";
+		_gearClass = _player getVariable "hull3_gear_class";
 	};
-	/*
 	if (!isNil "_gearClass") then
 	{
 		{
@@ -28,11 +35,14 @@ REL_IsLeader =
 				_leader = true;
 			};
 		} forEach HULL_LEADER_ARRAY;
+		[["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gearClass,_leader]] call REL_Debug_RPT;
+		[["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gearClass,_leader]] call REL_Debug_Hint;
+	}
+	else
+	{
+		[["No valid gear class defined for: %1",_player]] call REL_Debug_RPT;
+		[["No valid gear class defined for: %1",_player]] call REL_Debug_Hint;
 	};
-	*/
-	_leader = true;
-	[["%1 is a leader: %2",_player,_leader]] call REL_Debug_Hint;
-	[["%1 is a leader: %2",_player,_leader]] call REL_Debug_RPT;
 	_leader;
 };
 
