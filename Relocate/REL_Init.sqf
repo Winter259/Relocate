@@ -29,6 +29,7 @@ REL_Precompile_Functions =
 	PRECOMPILE("Relocate\REL_Server_Functions.sqf");
 	PRECOMPILE("Relocate\REL_Addactions.sqf");
 	PRECOMPILE("Relocate\REL_Common_Functions.sqf");
+	PRECOMPILE("Relocate\Compat\AGM\REL_AGM_Functions.sqf");
 };
 
 REL_DetermineVersion =

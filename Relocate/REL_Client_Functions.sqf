@@ -28,13 +28,6 @@ REL_DeployGroup =
 	hint "Deploy successful";
 };
 
-REL_AssignAGMDeployClick =
-{
-	FUN_ARGS_1(_player);
-	hint "Click anywhere on the map to deploy to that location.";
-	_player onMapSingleClick {[_this,_pos,nil] call REL_DeployGroup;};
-};
-
 REL_AssignDeployClick =
 {
 	FUN_ARGS_2(_player,_actionID);
