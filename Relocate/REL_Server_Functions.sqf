@@ -94,7 +94,10 @@ REL_WaitForRelocateActive =
 	{
 		// Add enable addaction to host, for a future version
 	};
-	sleep 5;
+  if (isMultiplayer) then
+  {
+    sleep 3;
+  };
 	hint "Relocate has been activated."; // This only appears in the editor.
 	[["Relocate has been activated."]] call REL_Debug_RPT;
 	REL_DeployAllowed = true;
