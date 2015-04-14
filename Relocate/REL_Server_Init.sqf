@@ -8,9 +8,11 @@ REL_Server_Init =
 	[] call REL_Precompile_Functions;
 	[["Relocate version %1 has successfully initialised for ArmA %2. Hull is present: %3",REL_VERSION_STR,REL_ArmaVersion,REL_HullPresent]] call REL_Debug_RPT;
 	[] call REL_EH_AssignDeployLogging;
+  [] call REL_EH_BouncePreSafetyDeployActivation;
 	REL_Initialised = true;
 	publicVariable "REL_Initialised";
-	sleep 2; // to remove
+	[["Completed server init"]] call REL_Debug_RPT;
+  [["Completed server init"]] call REL_Debug_Hint;
 	[] call REL_AssignDeploy;
 	[] spawn REL_WaitForRelocateActive;
 };
@@ -20,11 +22,14 @@ REL_InitVariables =
 	REL_ArmaVersion = 0;
 	REL_DeployAllowed = false;
   REL_HullPresent = false;
+  REL_Presafety_Activation_Server = false;
 };
 
 REL_Precompile_Functions =
 {
 	PRECOMPILE("Relocate\REL_Debug.sqf");
+  [["Performing server init"]] call REL_Debug_RPT;
+  [["Performing server init"]] call REL_Debug_Hint;
 	PRECOMPILE("Relocate\REL_Server_Functions.sqf");
 	PRECOMPILE("Relocate\REL_Addactions.sqf");
 	if (REL_UseAGMInteract) then

@@ -1,5 +1,18 @@
 #include "REL_Macros.h"
 
+REL_IsAdmin =
+{
+  FUN_ARGS_1(_player);
+  DECLARE(_isAdmin) = false;
+  if (serverCommandAvailable "#logout") then
+  {
+    _isAdmin = true;
+    [["Player: %1 is logged in as Admin",_player]] call REL_Debug_RPT;
+    [["Player: %1 is logged in as Admin",_player]] call REL_Debug_Hint;
+  };
+  _isAdmin;
+};
+
 REL_SetPlayerDeployedStatus =
 {
 	FUN_ARGS_2(_player,_status);

@@ -13,7 +13,19 @@ REL_EH_AssignDeployLogging =
 {
 	"REL_Group_Deployment" addPublicVariableEventHandler
 	{
-		[["%1 attempted to deploy at %2",((_this select 1) select 0),((_this select 1) select 1)]] call REL_Debug_RPT;
+		//[["%1 attempted to deploy at %2",((_this select 1) select 0),((_this select 1) select 1)]] call REL_Debug_RPT; // Debug is turned off for live play.
+    diag_log format ["%1 - RELOCATE LOGGING: %1 attempted to deploy at co-ordinates: %2",((_this select 1) select 0),((_this select 1) select 1)];
+	};
+};
+
+REL_EH_BouncePreSafetyDeployActivation = 
+{
+  // Required due to host not being able to deploy since EH will not fire on host's PC
+  "REL_Presafety_Activation_Server" addPublicVariableEventHandler
+	{
+		REL_Presafety_Activation = true;
+    publicVariable "REL_Presafety_Activation";
+    [["Server is bouncing the Pre-Safety-Off value to all clients."]] call REL_Debug_RPT;
 	};
 };
 
@@ -74,10 +86,13 @@ REL_PassOnAction =
 
 REL_WaitForRelocateActive =
 {
-	[["Relocate has been activated (PRE SAFETY OFF!)"]] call REL_Debug_RPT;
-	[["Relocate has been activated (PRE SAFETY OFF!)"]] call REL_Debug_Hint;
-  REL_Presafety_Activation = true;
-  publicVariable "REL_Presafety_Activation";
+  if (!REL_GiveAdminPresafetyActivate) then
+  {
+    REL_Presafety_Activation = true;
+    publicVariable "REL_Presafety_Activation";
+    [["Relocate has been activated (PRE SAFETY OFF!)"]] call REL_Debug_RPT;
+    [["Relocate has been activated (PRE SAFETY OFF!)"]] call REL_Debug_Hint;
+  };
   if (IS_ARMA2 && REL_HullPresent) then
 	{
 		waitUntil
@@ -102,8 +117,8 @@ REL_WaitForRelocateActive =
   {
     sleep 3;
   };
-	[["Relocate has been activated (POST SAFETY OFF!)"]] call REL_Debug_RPT;
-	[["Relocate has been activated (POST SAFETY OFF!)"]] call REL_Debug_Hint;
 	REL_DeployAllowed = true; // 
 	publicVariable "REL_DeployAllowed";
+  [["Relocate has been activated (POST SAFETY OFF!)"]] call REL_Debug_RPT;
+	[["Relocate has been activated (POST SAFETY OFF!)"]] call REL_Debug_Hint;
 };

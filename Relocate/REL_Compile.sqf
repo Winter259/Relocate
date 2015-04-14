@@ -25,8 +25,6 @@ if (isServer) then
 // Client Init + SP Init
 if (!isServer || !isMultiplayer) then
 {
-	PRECOMPILE("Relocate\REL_Client_Functions.sqf");
-	PRECOMPILE("Relocate\REL_Addactions.sqf");
-	PRECOMPILE("Relocate\REL_Debug.sqf");
-  [] call REL_EH_AssignPreSafetyActivation;
+	PRECOMPILE("Relocate\REL_Client_Init.sqf");
+  [] call REL_Client_Init;
 };

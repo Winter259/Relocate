@@ -13,6 +13,7 @@ REL_AllowPresafetyDeploy_BLU = false;
 REL_AllowPresafetyDeploy_OPF = false;
 REL_AllowPresafetyDeploy_IND = true;
 REL_AllowPresafetyDeploy_CIV = false;
+REL_GiveAdminPresafetyActivate = true; // Make true if you want a logged in admin to have an addaction to enable pre safety deploy.
 
 REL_AlternativeDeployAvailable = false;
 

@@ -13,6 +13,16 @@ REL_EH_AssignPreSafetyActivation =
 	};
 };
 
+REL_AssignPreSafetyAddaction =
+{
+  FUN_ARGS_1(_player);
+  if (([_player] call REL_IsAdmin || !isMultiplayer) && REL_GiveAdminPresafetyActivate && (REL_AllowPresafetyDeploy_BLU || REL_AllowPresafetyDeploy_OPF || REL_AllowPresafetyDeploy_IND || REL_AllowPresafetyDeploy_CIV)) then
+  {
+     _player addaction ["<t color ='#9F81F7'>Activate Pre-Safety-Off Deploy</t>","Relocate\REL_Pre_Safety_Deploy.sqf",nil,-100,true,true,"","(_target == _this)"];
+     [["Player: %1 has been assigned the Pre-Safety-Off addaction",_player]] call REL_Debug_RPT;
+  };
+};
+
 REL_IsSideAllowedPreDeploy =
 {
   FUN_ARGS_1(_player);
