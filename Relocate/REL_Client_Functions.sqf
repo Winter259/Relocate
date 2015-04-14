@@ -2,8 +2,9 @@
 
 REL_DeployGroup =
 {
-	FUN_ARGS_3(_player,_position,_actionID);
+	FUN_ARGS_2(_player,_position);
 	DECLARE(_group) = group _player;
+  DECLARE(_actionID) = [_player] call REL_GetDeployActionID;
 	if (!isNil "_actionID") then
 	{
 		[_player,_actionID] call REL_RemoveDeploy;
@@ -37,8 +38,8 @@ REL_DeployGroup =
 
 REL_AssignDeployClick =
 {
-	FUN_ARGS_2(_player,_actionID);
-	[_player,_actionID] onMapSingleClick {[(_this select 0),_pos,(_this select 1)] call REL_DeployGroup;};
+	FUN_ARGS_1(_player);
+	[_player] onMapSingleClick {[(_this select 0),_pos] call REL_DeployGroup;};
 };
 
 REL_RemoveDeploy =

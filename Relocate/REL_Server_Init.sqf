@@ -19,6 +19,7 @@ REL_InitVariables =
 {
 	REL_ArmaVersion = 0;
 	REL_DeployAllowed = false;
+  REL_HullPresent = false;
 };
 
 REL_Precompile_Functions =
@@ -37,21 +38,25 @@ REL_DetermineVersion =
 	if (isNil {call compile "blufor"}) then
 	{
 		REL_ArmaVersion = 2;
-		if (!(isNil "hull_isInitialized")) then
-		{
-			WAIT_DELAY(1,hull_isInitialized;);
-			REL_HullPresent = true;
-			publicVariable "REL_HullPresent";
-		};
+    waitUntil
+    {
+      sleep 1;
+      !isNil "hull_isInitialized";
+    };
+    WAIT_DELAY(1,hull_isInitialized;);
+    REL_HullPresent = true;
+    publicVariable "REL_HullPresent";
 	}
 	else
 	{
 		REL_ArmaVersion = 3;
-		if (!(isNil "hull_isInitialized")) then
-		{
-			WAIT_DELAY(1,hull3_isInitialized;);
-			REL_HullPresent = true;
-			publicVariable "REL_HullPresent";
-		};
+		waitUntil
+    {
+      sleep 1;
+      !isNil "hull3_isInitialized";
+    };
+    WAIT_DELAY(1,hull3_isInitialized;);
+    REL_HullPresent = true;
+    publicVariable "REL_HullPresent";
 	};
 };

@@ -33,7 +33,7 @@
 #define IND_STR		"GUER"
 #define CIV_STR		"CIV"
 
-#define SIDE_ARRAY			[BLU,OPF,IND,CIV]
+#define SIDE_ARRAY			  [BLU,OPF,IND,CIV]
 #define SIDE_ARRAY_STR		[BLU_STR,OPF_STR,IND_STR,CIV_STR]
 
 #define HULL_LEADER_ARRAY	["CO","SL","FTL","MMGG","HMGG","MATG","HATG","SN","MRTG","ENG","VC"]
