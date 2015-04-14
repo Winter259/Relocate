@@ -13,14 +13,7 @@ REL_IsLeader =
 	FUN_ARGS_1(_player);
 	PVT_1(_gearClass);
 	DECLARE(_leader) = false;
-	if (IS_ARMA2) then
-	{
-		_gearClass = _player getVariable "hull_gear_class";
-	}
-	else
-	{
-		_gearClass = _player getVariable "hull3_gear_class";
-	};
+	_gearClass = [_player] call REL_ReturnGearClass;
 	if (!isNil "_gearClass") then
 	{
 		{
@@ -73,13 +66,14 @@ REL_EngineerAssignCheck =
 REL_AssignToLeader =
 {
 	FUN_ARGS_1(_player);
+  PVT_1(_gearClass);
 	if ([_player] call REL_PlayerIsValid) then
 	{
 		if ([_player] call REL_IsLeader) then
 		{
         [-1, {[_this] call REL_GiveDeployAction;}, _player] call CBA_fnc_globalExecute;
         [["Deploy successfully assigned to: %1!",_player]] call REL_Debug_RPT;
-        if (!([group _player] call REL_EngineerAssignCheck)) then // This is required since all units in Engineer groups are ENG!
+        if ((([_player] call REL_ReturnGearClass) == "ENG") && !([group _player] call REL_EngineerAssignCheck)) then // This is required since all units in Engineer groups are ENG!
         {
           [_player,([_player] call REL_GetDeployActionID)] call REL_RemoveDeploy;
           [["WARNING: DEPLOY REMOVED FROM %1 SINCE ENGINEER GROUP ALREADY HAS DEPLOY ASSIGNED!",_player]] call REL_Debug_RPT;

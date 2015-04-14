@@ -74,7 +74,11 @@ REL_PassOnAction =
 
 REL_WaitForRelocateActive =
 {
-	if (IS_ARMA2 && REL_HullPresent) then
+	[["Relocate has been activated (PRE SAFETY OFF!)"]] call REL_Debug_RPT;
+	[["Relocate has been activated (PRE SAFETY OFF!)"]] call REL_Debug_Hint;
+  REL_Presafety_Activation = true;
+  publicVariable "REL_Presafety_Activation";
+  if (IS_ARMA2 && REL_HullPresent) then
 	{
 		waitUntil
 		{
@@ -98,8 +102,8 @@ REL_WaitForRelocateActive =
   {
     sleep 3;
   };
-	hint "Relocate has been activated."; // This only appears in the editor.
-	[["Relocate has been activated."]] call REL_Debug_RPT;
-	REL_DeployAllowed = true;
+	[["Relocate has been activated (POST SAFETY OFF!)"]] call REL_Debug_RPT;
+	[["Relocate has been activated (POST SAFETY OFF!)"]] call REL_Debug_Hint;
+	REL_DeployAllowed = true; // 
 	publicVariable "REL_DeployAllowed";
 };

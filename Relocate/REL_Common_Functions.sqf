@@ -27,3 +27,18 @@ REL_GetDeployActionID =
 	_actionID = _player getVariable ["REL_CurrentActionID",nil];
 	_actionID;
 };
+
+REL_ReturnGearClass =
+{
+  FUN_ARGS_1(_player);
+  PVT_1(_gearClass);
+  if (IS_ARMA2) then
+	{
+		_gearClass = _player getVariable "hull_gear_class";
+	}
+	else
+	{
+		_gearClass = _player getVariable "hull3_gear_class";
+	};
+  _gearClass;
+};

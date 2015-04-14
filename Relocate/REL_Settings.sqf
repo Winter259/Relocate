@@ -11,7 +11,7 @@ REL_AllowDeploy_CIV 	= false;
 // Example: one team has to choose a place to defend, other team then plans and deploys.
 REL_AllowPresafetyDeploy_BLU = false;
 REL_AllowPresafetyDeploy_OPF = false;
-REL_AllowPresafetyDeploy_IND = false;
+REL_AllowPresafetyDeploy_IND = true;
 REL_AllowPresafetyDeploy_CIV = false;
 
 REL_AlternativeDeployAvailable = false;

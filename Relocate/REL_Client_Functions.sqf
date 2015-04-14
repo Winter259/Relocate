@@ -1,5 +1,14 @@
 #include "REL_Macros.h"
 
+REL_EH_AssignPreSafetyActivation =
+{
+  FUN_ARGS_1(_player);
+  "REL_Presafety_Activation" addPublicVariableEventHandler
+	{
+		REL_DeployAllowed = true; // Turns on deploy immediately once assigned.
+	};
+};
+
 REL_DeployGroup =
 {
 	FUN_ARGS_2(_player,_position);
