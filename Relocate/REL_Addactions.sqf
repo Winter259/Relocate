@@ -104,7 +104,7 @@ REL_AssignDeploy =
 	[["Assigning group deploy to all leaders now"]] call REL_Debug_Hint;
 	[["Assigning group deploy to all leaders now"]] call REL_Debug_RPT;
 	{
-		if ([_x] call REL_SideIsAllowed) then
+		if ([_x] call REL_IsSideAllowedDeploy) then
     {
       [_x] call REL_AssignToLeader;
       sleep 0.1;
@@ -112,7 +112,7 @@ REL_AssignDeploy =
 	} forEach allUnits;
 };
 
-REL_SideIsAllowed =
+REL_IsSideAllowedDeploy =
 {
   FUN_ARGS_1(_player);
   DECLARE(_allowed) = false;
@@ -120,7 +120,7 @@ REL_SideIsAllowed =
   {
     case blufor:      {if (REL_AllowDeploy_BLU) then {_allowed = true;}};
     case opfor:       {if (REL_AllowDeploy_OPF) then {_allowed = true;}};
-    case resistance:  {if (REL_AllowDeploy_IND) then {_allowed = true;}}; // setting as indfor causes an error.
+    case resistance:  {if (REL_AllowDeploy_IND) then {_allowed = true;}};
     case civilian:    {if (REL_AllowDeploy_CIV) then {_allowed = true;}};
   };
   [["FACTION CHECK: Player: %1 Side: %2 Allowed: %3",_player,side _player,_allowed]] call REL_Debug_RPT;

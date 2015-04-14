@@ -23,11 +23,6 @@
 #define HALO_DROP_HEIGHT              2000
 #define HALO_PARACHUTE_OPEN_ALTITUDE  400
 
-#define BLU			west
-#define OPF			east
-#define IND			resistance
-#define CIV			civilian
-
 #define BLU_STR		"WEST"
 #define OPF_STR		"EAST"
 #define IND_STR		"GUER"

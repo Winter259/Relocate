@@ -2,11 +2,31 @@
 
 REL_EH_AssignPreSafetyActivation =
 {
-  FUN_ARGS_1(_player);
+  // This works in MP ONLY! #blameBI
   "REL_Presafety_Activation" addPublicVariableEventHandler
 	{
-		REL_DeployAllowed = true; // Turns on deploy immediately once assigned.
+		if ([player] call REL_IsSideAllowedPreDeploy) then
+    {
+      REL_DeployAllowed = true; // Turns on deploy action
+      [["Player: %1 has been allowed to deploy before Hull safety was turned off",player]] call REL_Debug_RPT;
+    };
 	};
+};
+
+REL_IsSideAllowedPreDeploy =
+{
+  FUN_ARGS_1(_player);
+  DECLARE(_allowed) = false;
+  switch (side _player) do
+  {
+    case blufor:      {if (REL_AllowPresafetyDeploy_BLU) then {_allowed = true;}};
+    case opfor:       {if (REL_AllowPresafetyDeploy_OPF) then {_allowed = true;}};
+    case resistance:  {if (REL_AllowPresafetyDeploy_IND) then {_allowed = true;}};
+    case civilian:    {if (REL_AllowPresafetyDeploy_CIV) then {_allowed = true;}};
+  };
+  [["PRE SAFETY OFF CHECK: Player: %1 Side: %2 Allowed: %3",_player,side _player,_allowed]] call REL_Debug_RPT;
+  [["PRE SAFETY OFF CHECK: Player: %1 Side: %2 Allowed: %3",_player,side _player,_allowed]] call REL_Debug_Hint;
+  _allowed;
 };
 
 REL_DeployGroup =

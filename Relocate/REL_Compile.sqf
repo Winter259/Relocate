@@ -28,5 +28,5 @@ if (!isServer || !isMultiplayer) then
 	PRECOMPILE("Relocate\REL_Client_Functions.sqf");
 	PRECOMPILE("Relocate\REL_Addactions.sqf");
 	PRECOMPILE("Relocate\REL_Debug.sqf");
-  [player] call REL_EH_AssignPreSafetyActivation;
+  [] call REL_EH_AssignPreSafetyActivation;
 };
