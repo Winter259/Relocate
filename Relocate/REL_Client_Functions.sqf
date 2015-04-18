@@ -15,7 +15,7 @@ REL_EH_PreSafetyActivation =
 
 REL_DeterminePreSafetyFaction =
 {
-  PVT_1(_side);
+  DECLARE(_side) = null;
   if (REL_AllowPresafetyDeploy_BLU) then {_side = west;};
   if (REL_AllowPresafetyDeploy_OPF) then {_side = east;};
   if (REL_AllowPresafetyDeploy_IND) then {_side = resistance;};
