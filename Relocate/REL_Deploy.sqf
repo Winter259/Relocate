@@ -7,6 +7,7 @@ _user = _this select 1;
 hint "Click anywhere on the map to deploy to that location.";
 if (!(isNull _user) && !(isNil "_user")) then
 {
+  [_user] call REL_AssignDeployClick;
 }
 else
 {
