@@ -2,5 +2,14 @@
 
 // _this select 1 is the person activating the action, _this select 2 is the ID of the action
 
+private "_user";
+_user = _this select 1;
 hint "Click anywhere on the map to deploy to that location.";
-[_this select 1] call REL_AssignDeployClick;
+if (!(isNull _user) && !(isNil "_user")) then
+{
+}
+else
+{
+  [["ERROR! User %1 was considered null/nil for some reason!",_user]] call REL_Debug_RPT;
+  [["ERROR! User %1 was considered null/nil for some reason!",_user]] call REL_Debug_Hint;
+};
