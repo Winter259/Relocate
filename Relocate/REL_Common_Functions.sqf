@@ -55,3 +55,48 @@ REL_ReturnGearClass =
 	};
   _gearClass;
 };
+
+REL_ReturnFactionString =
+{
+  FUN_ARGS_1(_side);
+  DECLARE(_string) = "";
+  //if (_side != "") then
+  if (!isNil "_side") then
+  {
+    switch (_side) do
+    {
+      case blufor:      {_string = "BLUFOR";  };
+      case opfor:       {_string = "OPFOR";   };
+      case resistance:  {_string = "INDFOR";  };
+      case civilian:    {_string = "CIVILIAN";};
+    };
+  }
+  else
+  {
+    [["WARNING! No valid faction passed, no string returned."]] call REL_Debug_RPT;
+    [["WARNING! No valid faction passed, no string returned."]] call REL_Debug_Hint;
+  };
+  _string;
+};
+
+REL_ReturnFactionHTMLColour =
+{
+  FUN_ARGS_1(_side);
+  DECLARE(_string) = "";
+  switch (_side) do
+  {
+    case blufor:      {_string = BLUFOR_COLOUR_HTML;  };
+    case opfor:       {_string = OPFOR_COLOUR_HTML;   };
+    case resistance:  {_string = INDFOR_COLOUR_HTML;  };
+    case civilian:    {_string = CIV_COLOUR_HTML;     };
+  };
+  _string;
+};
+
+REL_ReturnHTMLColouredText =
+{
+  FUN_ARGS_2(_text,_html_colour);
+  DECLARE(_first_colour_tag) = format ["<t color = '%1'>",_html_colour];
+  DECLARE(_coloured_text) = format ["%1%2%3",_first_colour_tag,_text,"</t>"];
+  _coloured_text;
+};

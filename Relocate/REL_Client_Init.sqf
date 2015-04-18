@@ -3,7 +3,7 @@
 REL_Client_Init =
 {
 	[] call REL_Precompile_Client_Functions;
-  [] call REL_EH_AssignPreSafetyActivation;
+  [] call REL_EH_PreSafetyActivation;
   [player] call REL_AssignPreSafetyAddaction;
 };
 

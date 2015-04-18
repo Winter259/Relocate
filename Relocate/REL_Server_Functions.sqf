@@ -86,7 +86,7 @@ REL_PassOnAction =
 
 REL_WaitForRelocateActive =
 {
-  if (!REL_GiveAdminPresafetyActivate) then
+  if (!REL_AllowPreSafetyDeploy) then
   {
     REL_Presafety_Activation = true;
     publicVariable "REL_Presafety_Activation";

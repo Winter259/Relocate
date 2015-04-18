@@ -4,7 +4,8 @@ REL_GiveDeploy_Addaction =
 {
 	FUN_ARGS_1(_player);
   PVT_1(_actionID);
-	_actionID = _player addaction ["<t color ='#00BFFF'>Deploy Group</t>","Relocate\REL_Deploy.sqf",nil,10,true,true,"","(_target == _this) && REL_DeployAllowed && !([_target] call REL_GetPlayerDeployedStatus)"];
+  DECLARE(_addaction_string) = ["Deploy Group",REL_ACTION_COLOUR_HTML] call REL_ReturnHTMLColouredText;
+	_actionID = _player addaction [_addaction_string,"Relocate\REL_Deploy.sqf",nil,10,true,true,"","(_target == _this) && REL_DeployAllowed && !([_target] call REL_GetPlayerDeployedStatus)"];
   [_player,_actionID] call REL_SetDeployActionID;
 };
 

@@ -18,18 +18,16 @@
 #define IS_ARMA2				(REL_ArmaVersion == 2)
 #define IS_ARMA3				(REL_ArmaVersion == 3)
 
+#define REL_ACTION_COLOUR_HTML "#F7FE2E"
+#define BLUFOR_COLOUR_HTML     "#0040FF"
+#define OPFOR_COLOUR_HTML      "#FE2E2E"
+#define INDFOR_COLOUR_HTML     "#40FF00"
+#define CIV_COLOUR_HTML        "#D358F7"
+
 #define HALO_DROP_DELAY               2
 #define HALO_DROP_RADIUS              150
 #define HALO_DROP_HEIGHT              2000
 #define HALO_PARACHUTE_OPEN_ALTITUDE  400
-
-#define BLU_STR		"WEST"
-#define OPF_STR		"EAST"
-#define IND_STR		"GUER"
-#define CIV_STR		"CIV"
-
-#define SIDE_ARRAY			  [BLU,OPF,IND,CIV]
-#define SIDE_ARRAY_STR		[BLU_STR,OPF_STR,IND_STR,CIV_STR]
 
 #define HULL_LEADER_ARRAY	["CO","SL","FTL","MMGG","HMGG","MATG","HATG","SN","MRTG","ENG","VC"]
 

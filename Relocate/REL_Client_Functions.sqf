@@ -1,6 +1,6 @@
 #include "REL_Macros.h"
 
-REL_EH_AssignPreSafetyActivation =
+REL_EH_PreSafetyActivation =
 {
   // This works in MP ONLY! #blameBI
   "REL_Presafety_Activation" addPublicVariableEventHandler
@@ -13,12 +13,41 @@ REL_EH_AssignPreSafetyActivation =
 	};
 };
 
+REL_DeterminePreSafetyFaction =
+{
+  PVT_1(_side);
+  if (REL_AllowPresafetyDeploy_BLU) then {_side = west;};
+  if (REL_AllowPresafetyDeploy_OPF) then {_side = east;};
+  if (REL_AllowPresafetyDeploy_IND) then {_side = resistance;};
+  if (REL_AllowPresafetyDeploy_CIV) then {_side = civilian;};
+  if (isNil "_side") then
+  {
+    [["WARNING! No valid faction determined. Did you set it to true in settings?"]] call REL_Debug_RPT;
+    [["WARNING! No valid faction determined. Did you set it to true in settings?"]] call REL_Debug_Hint;
+    if (REL_AllowPreSafetyDeploy) then
+    {
+      [["WARNING! Pre-safety-off deploy is enabled but no faction will has been defined to receive it."]] call REL_Debug_RPT;
+      [["WARNING! Pre-safety-off deploy is enabled but no faction will has been defined to receive it."]] call REL_Debug_Hint;
+    };
+  }
+  else
+  {
+    [["Pre-Safety-Off faction is: %1.",_side]] call REL_Debug_Hint;
+    [["Pre-Safety-Off faction is: %1.",_side]] call REL_Debug_RPT;
+  };
+  _side;
+};
+
 REL_AssignPreSafetyAddaction =
 {
   FUN_ARGS_1(_player);
-  if (([_player] call REL_IsAdmin || !isMultiplayer) && REL_GiveAdminPresafetyActivate && (REL_AllowPresafetyDeploy_BLU || REL_AllowPresafetyDeploy_OPF || REL_AllowPresafetyDeploy_IND || REL_AllowPresafetyDeploy_CIV)) then
+  DECLARE(_pre_safety_side) = [] call REL_DeterminePreSafetyFaction;
+  DECLARE(_side_string) = [_pre_safety_side] call REL_ReturnFactionString;
+  DECLARE(_faction_string) = [_side_string,([_pre_safety_side] call REL_ReturnFactionHTMLColour)] call REL_ReturnHTMLColouredText;
+  DECLARE(_addaction_string) = format["<t color ='%1'>Group Deploy: Activate %2 Deploy</t>",REL_ACTION_COLOUR_HTML,_faction_string];
+  if (([_player] call REL_IsAdmin || !isMultiplayer) && REL_AllowPreSafetyDeploy && (REL_AllowPresafetyDeploy_BLU || REL_AllowPresafetyDeploy_OPF || REL_AllowPresafetyDeploy_IND || REL_AllowPresafetyDeploy_CIV)) then
   {
-     _player addaction ["<t color ='#9F81F7'>Activate Pre-Safety-Off Deploy</t>","Relocate\REL_Pre_Safety_Deploy.sqf",nil,-100,true,true,"","(_target == _this)"];
+     _player addaction [_addaction_string,"Relocate\REL_Pre_Safety_Deploy.sqf",nil,-100,true,true,"","(_target == _this)"];
      [["Player: %1 has been assigned the Pre-Safety-Off addaction",_player]] call REL_Debug_RPT;
   };
 };
