@@ -96,6 +96,7 @@ REL_DeployGroup =
 			INC(_position_y);
 		} forEach units _group;
 		[_player,true] call REL_SetPlayerDeployedStatus;
+    openMap false;
 		hint "Deploy successful";
 	}
   else
