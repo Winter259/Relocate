@@ -44,7 +44,10 @@ REL_GlobalAssignDeploy =
 		if ([_x] call REL_IsSideAllowedDeploy) then
     {
       [_x] call REL_AssignDeployToLeader;
-      sleep 0.1;
+      if (!REL_Debug) then
+      {
+        sleep 0.3;
+      };
     };
 	} forEach allUnits;
 };

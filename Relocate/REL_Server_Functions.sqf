@@ -160,10 +160,6 @@ REL_WaitForRelocateActive =
 	{
 		// Add enable addaction to host, for a future version
 	};
-  if (isMultiplayer) then
-  {
-    sleep 3;
-  };
 	REL_DeployAllowed = true; // 
 	publicVariable "REL_DeployAllowed";
   [["Relocate has been activated (POST SAFETY OFF!)"]] call REL_Debug_RPT;
