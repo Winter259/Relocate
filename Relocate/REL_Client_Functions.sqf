@@ -95,7 +95,7 @@ REL_DeployGroup =
 			INC(_position_y);
 		} forEach units _group;
 		[_player,true] call REL_SetPlayerDeployedStatus;
-    sleep 1;
+    sleep 0.5;
     openMap false;
 		hint "Deploy successful";
 	}
@@ -108,7 +108,7 @@ REL_DeployGroup =
 REL_AssignDeployClick =
 {
 	FUN_ARGS_1(_player);
-	[_player] onMapSingleClick {[(_this select 0),_pos] call REL_DeployGroup;};
+	[_player] onMapSingleClick {[(_this select 0),_pos] spawn REL_DeployGroup;};
 };
 
 REL_HaloDeploy = 
