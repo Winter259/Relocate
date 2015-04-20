@@ -62,6 +62,65 @@ REL_LeaderIsValid =
 	_valid;
 };
 
+REL_AssignToLeader =
+{
+	FUN_ARGS_1(_player);
+  PVT_1(_gearClass);
+	if ([_player] call REL_PlayerIsValid) then
+	{
+		if ([_player] call REL_IsLeader) then
+		{
+        [-1, {[_this] call REL_GiveDeployAction;}, _player] call CBA_fnc_globalExecute;
+        [_player,true] call REL_SetDeployAssigned;
+        [["Deploy successfully assigned to: %1!",_player]] call REL_Debug_RPT;
+        [["Deploy successfully assigned to: %1!",_player]] call REL_Server_Log;
+        if ((([_player] call REL_ReturnGearClass) == "ENG") && !([group _player] call REL_EngineerAssignCheck)) then // This is required since all units in Engineer groups are ENG!
+        {
+          [_player,([_player] call REL_GetDeployActionID)] call REL_RemoveDeployAction;
+          [_player,false] call REL_SetDeployAssigned;
+          [["WARNING: DEPLOY REMOVED FROM %1 SINCE ENGINEER GROUP ALREADY HAS DEPLOY ASSIGNED!",_player]] call REL_Debug_RPT;
+        };
+		}
+		else
+		{
+			[_player] call REL_PassOnAction;
+		};
+	};
+};
+
+REL_IsLeader =
+{
+	FUN_ARGS_1(_player);
+	PVT_1(_gearClass);
+	DECLARE(_leader) = false;
+	_gearClass = [_player] call REL_ReturnGearClass;
+	if (!isNil "_gearClass") then
+	{
+		{
+			if (_gearClass == _x) then
+			{
+				_leader = true;
+			};
+		} forEach HULL_LEADER_ARRAY;
+    if ((_gearClass == "ENG") && !([group _player] call REL_EngineerAssignCheck)) then
+    {
+      // Hacky workaround for ENG teams all taking gear from ENG template
+      [["WARNING: ENGINEER DUPLICATE FIX DEPLOYED FOR: %1",_player]] call REL_Debug_RPT;
+      [_player] call REL_EngineerDuplicateFix;
+    };
+		[["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gearClass,_leader]] call REL_Debug_RPT;
+		[["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gearClass,_leader]] call REL_Debug_Hint;
+	}
+	else
+	{
+		[["GEAR CHECK: No valid gear class defined for: %1",_player]] call REL_Debug_RPT;
+		[["GEAR CHECK: No valid gear class defined for: %1",_player]] call REL_Debug_Hint;
+	};
+	_leader;
+};
+
+
+
 REL_PassOnAction =
 {
 	FUN_ARGS_1(_player);

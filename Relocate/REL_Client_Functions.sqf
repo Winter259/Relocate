@@ -75,11 +75,11 @@ REL_DeployGroup =
   DECLARE(_actionID) = [_player] call REL_GetDeployActionID;
 	if (!isNil "_actionID") then
 	{
-		[_player,_actionID] call REL_RemoveDeploy;
+		[_player,_actionID] call REL_RemoveDeployAction;
 	}
 	else
 	{
-		[_player,nil] call REL_RemoveDeploy; // AGM Interact does not have an actionID
+		[_player,nil] call REL_RemoveDeployAction; // AGM Interact does not have an actionID
 	};
 	REL_Group_Deployment = [_player,_position];
 	publicVariableServer "REL_Group_Deployment";
@@ -109,16 +109,6 @@ REL_AssignDeployClick =
 {
 	FUN_ARGS_1(_player);
 	[_player] onMapSingleClick {[(_this select 0),_pos] call REL_DeployGroup;};
-};
-
-REL_RemoveDeploy =
-{
-	FUN_ARGS_2(_player,_actionID);
-	if (!isNil "_actionID") then
-	{
-		_player removeAction _actionID;
-	};
-	onMapSingleClick "";
 };
 
 REL_HaloDeploy = 
