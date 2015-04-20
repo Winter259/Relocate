@@ -70,7 +70,7 @@ REL_AssignDeployToLeader =
   DECLARE(_gear_class) = [_player] call REL_ReturnGearClass;
   if ([_player] call REL_IsLeader) then
   {
-    if ([_player] call REL_PlayerIsValid) then
+    if (([_player] call REL_PlayerIsValid) && !([_player] call REL_CheckEngineerGroupForDuplicates)) then
     {
       //[_player] call REL_GiveDeployAction; // Has to be run semi-/globally
       [_player,_gear_class] call REL_AssignEngineerDuplicateFix; // required for engineers
@@ -99,7 +99,7 @@ REL_PassOnDeployAction =
   PVT_1(_i);
   _units = _units - [_leader];// Remove the leader from the array, can be replaced with find & deleteAt.
   {
-    if ([_x] call REL_PlayerIsValid) exitWith
+    if (([_x] call REL_PlayerIsValid) && !([_x] call REL_CheckEngineerGroupForDuplicates)) exitWith
     {
       _valid_unit_found = true;
       [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Server_Log;
