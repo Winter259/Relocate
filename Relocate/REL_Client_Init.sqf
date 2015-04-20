@@ -3,6 +3,7 @@
 REL_Client_Init =
 {
 	[] call REL_Precompile_Client_Functions;
+  [] call REL_EH_DeployActivatedHint;
   if (REL_AllowPreSafetyDeploy) then
   {
     [["Pre-Safety-Off deploy is enabled. Running relevant functions now."]] call REL_Debug_RPT;
