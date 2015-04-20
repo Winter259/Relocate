@@ -15,15 +15,15 @@ REL_EH_PreSafetyActivation =
 
 REL_DeterminePreSafetyFaction =
 {
-  DECLARE(_side) = null;
+  DECLARE(_side) = ObjNull;
   if (REL_AllowPresafetyDeploy_BLU) then {_side = west;};
   if (REL_AllowPresafetyDeploy_OPF) then {_side = east;};
   if (REL_AllowPresafetyDeploy_IND) then {_side = resistance;};
   if (REL_AllowPresafetyDeploy_CIV) then {_side = civilian;};
-  if (isNil "_side") then
+  if (isNull _side) then
   {
-    [["WARNING! No valid faction determined. Did you set it to true in settings?"]] call REL_Debug_RPT;
-    [["WARNING! No valid faction determined. Did you set it to true in settings?"]] call REL_Debug_Hint;
+    [["WARNING! No valid faction chosen for pre-safety-off deploy. Did you set it to true in settings?"]] call REL_Debug_RPT;
+    [["WARNING! No valid faction chosen for pre-safety-off deploy. Did you set it to true in settings?"]] call REL_Debug_Hint;
     if (REL_AllowPreSafetyDeploy) then
     {
       [["WARNING! Pre-safety-off deploy is enabled but no faction will has been defined to receive it."]] call REL_Debug_RPT;

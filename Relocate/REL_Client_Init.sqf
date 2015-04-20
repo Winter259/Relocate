@@ -3,8 +3,13 @@
 REL_Client_Init =
 {
 	[] call REL_Precompile_Client_Functions;
-  [] call REL_EH_PreSafetyActivation;
-  [player] call REL_AssignPreSafetyAddaction;
+  if (REL_AllowPreSafetyDeploy) then
+  {
+    [["Pre-Safety-Off deploy is enabled. Running relevant functions now."]] call REL_Debug_RPT;
+    [["Pre-Safety-Off deploy is enabled. Running relevant functions now."]] call REL_Debug_Hint;
+    [] call REL_EH_PreSafetyActivation;
+    [player] call REL_AssignPreSafetyAddaction;
+  };
 };
 
 REL_Precompile_Client_Functions =
