@@ -1,9 +1,8 @@
 #include "REL_Macros.h"
-
 // _this select 1 is the person activating the action, _this select 2 is the ID of the action
-
-private "_user";
+private ["_user"];
 _user = _this select 1;
+_user removeAction (_this select 2);
 hint "Click anywhere on the map to deploy to that location.";
 if (!(isNull _user) && !(isNil "_user")) then
 {
