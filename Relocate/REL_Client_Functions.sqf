@@ -13,14 +13,6 @@ REL_EH_PreSafetyActivation =
 	};
 };
 
-REL_EH_DeployActivatedHint =
-{
-  "REL_DeployAllowed" addPublicVariableEventHandler
-	{
-    hint "You have been assigned the group deploy action."
-	};
-};
-
 REL_DeterminePreSafetyFaction =
 {
   DECLARE(_side) = ObjNull;
@@ -103,7 +95,6 @@ REL_DeployGroup =
 			INC(_position_y);
 		} forEach units _group;
 		[_player,true] call REL_SetPlayerDeployedStatus;
-    sleep 1;
     openMap false;
 		hint "Deploy successful";
 	}
