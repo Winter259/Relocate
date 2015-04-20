@@ -9,12 +9,19 @@ REL_FindEmptyPosition =
 };
 */
 
+REL_Server_Log =
+{
+  FUN_ARGS_1(_message);
+  diag_log format ["%1%2",DEBUG_HEADER,(format _message)];
+};
+
 REL_EH_AssignDeployLogging =
 {
 	"REL_Group_Deployment" addPublicVariableEventHandler
 	{
 		//[["%1 attempted to deploy at %2",((_this select 1) select 0),((_this select 1) select 1)]] call REL_Debug_RPT; // Debug is turned off for live play.
-    diag_log format ["%1 - RELOCATE LOGGING: %1 attempted to deploy at co-ordinates: %2",((_this select 1) select 0),((_this select 1) select 1)];
+    [((_this select 1) select 0),((_this select 1) select 1)] call REL_Server_Log;
+    //diag_log format ["%1 - RELOCATE LOGGING: %1 deployed at co-ordinates: %2",time,((_this select 1) select 0),((_this select 1) select 1)];
 	};
 };
 
@@ -26,6 +33,7 @@ REL_EH_BouncePreSafetyDeployActivation =
 		REL_Presafety_Activation = true;
     publicVariable "REL_Presafety_Activation";
     [["Server is bouncing the Pre-Safety-Off value to all clients."]] call REL_Debug_RPT;
+    [["Pre-Safety-Off deploy is now active."]] call REL_Server_Log;
 	};
 };
 
@@ -82,6 +90,19 @@ REL_PassOnAction =
 		};
 	} forEach units _group;
 	*/
+};
+
+REL_GroupHasDeploy =
+{
+  FUN_ARGS_1(_group);
+  DECLARE(_assigned) = false;
+  {
+    if ([_x] call REL_GetDeployAssigned) then
+    {
+      _assigned = true;
+    };
+  } forEach units _group;
+  _assigned;
 };
 
 REL_WaitForRelocateActive =

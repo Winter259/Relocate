@@ -13,7 +13,7 @@ REL_Server_Init =
 	publicVariable "REL_Initialised";
 	[["Completed server init"]] call REL_Debug_RPT;
   [["Completed server init"]] call REL_Debug_Hint;
-	[] call REL_AssignDeploy;
+	[] call REL_GlobalAssignDeploy;
 	[] spawn REL_WaitForRelocateActive;
 };
 
@@ -64,5 +64,4 @@ REL_DetermineVersion =
     REL_HullPresent = true;
     publicVariable "REL_HullPresent";
 	};
-  publicVariable "REL_ArmaVersion";
 };

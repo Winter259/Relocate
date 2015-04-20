@@ -73,10 +73,13 @@ REL_AssignToLeader =
 		if ([_player] call REL_IsLeader) then
 		{
         [-1, {[_this] call REL_GiveDeployAction;}, _player] call CBA_fnc_globalExecute;
+        [_player,true] call REL_SetDeployAssigned;
         [["Deploy successfully assigned to: %1!",_player]] call REL_Debug_RPT;
+        [["Deploy successfully assigned to: %1!",_player]] call REL_Server_Log;
         if ((([_player] call REL_ReturnGearClass) == "ENG") && !([group _player] call REL_EngineerAssignCheck)) then // This is required since all units in Engineer groups are ENG!
         {
           [_player,([_player] call REL_GetDeployActionID)] call REL_RemoveDeploy;
+          [_player,false] call REL_SetDeployAssigned;
           [["WARNING: DEPLOY REMOVED FROM %1 SINCE ENGINEER GROUP ALREADY HAS DEPLOY ASSIGNED!",_player]] call REL_Debug_RPT;
         };
 		}
@@ -92,7 +95,8 @@ REL_GiveDeployAction =
 	FUN_ARGS_1(_player);
 	if (local _player) then
 	{
-		[_player,false] call REL_SetPlayerDeployedStatus; // activates AGM action
+		[_player,true] call REL_SetDeployAssigned;
+    [_player,false] call REL_SetPlayerDeployedStatus; // activates AGM action
 		if (!REL_UseAGMInteract) then
 		{
 			[_player] call REL_GiveDeploy_Addaction;
@@ -104,6 +108,7 @@ REL_AssignDeploy =
 {
 	[["Assigning group deploy to all leaders now"]] call REL_Debug_Hint;
 	[["Assigning group deploy to all leaders now"]] call REL_Debug_RPT;
+  [["Hull Safety has been turned off, assigning group deploy to all leaders now."]] call REL_Server_Log;
 	{
 		if ([_x] call REL_IsSideAllowedDeploy) then
     {

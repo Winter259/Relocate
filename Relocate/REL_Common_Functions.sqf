@@ -9,6 +9,7 @@ REL_IsAdmin =
     _isAdmin = true;
     [["Player: %1 is logged in as Admin",_player]] call REL_Debug_RPT;
     [["Player: %1 is logged in as Admin",_player]] call REL_Debug_Hint;
+    [["Player: %1 is logged in as Admin",_player]] call REL_Server_Log;
   };
   _isAdmin;
 };
@@ -24,6 +25,20 @@ REL_GetPlayerDeployedStatus =
 	FUN_ARGS_1(_player);
 	PVT_1(_status);
 	_status = _player getVariable ["REL_PlayerDeployed",false];
+	_status;
+};
+
+REL_SetDeployAssigned =
+{
+  FUN_ARGS_2(_player,_status);
+  _player setVariable ["REL_PlayerAssignedDeploy",_status,true];
+};
+
+REL_GetDeployAssigned =
+{
+  FUN_ARGS_1(_player);
+  PVT_1(_status);
+	_status = _player getVariable ["REL_PlayerAssignedDeploy",false];
 	_status;
 };
 
