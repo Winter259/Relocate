@@ -8,7 +8,10 @@ REL_Server_Init =
 	[] call REL_Precompile_Functions;
 	[["Relocate version %1 has successfully initialised for ArmA %2. Hull is present: %3",REL_VERSION_STR,REL_ArmaVersion,REL_HullPresent]] call REL_Debug_RPT;
 	[] call REL_EH_AssignDeployLogging;
-  [] call REL_EH_BouncePreSafetyDeployActivation;
+  if (REL_AllowPreSafetyDeploy) then
+  {
+    [] call REL_EH_BouncePreSafetyDeployActivation;
+  };
 	REL_Initialised = true;
 	publicVariable "REL_Initialised";
 	[["Completed server init"]] call REL_Debug_RPT;
