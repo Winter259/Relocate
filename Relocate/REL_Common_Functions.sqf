@@ -88,7 +88,6 @@ REL_ReturnFactionString =
 {
   FUN_ARGS_1(_side);
   DECLARE(_string) = "";
-  //if (_side != "") then
   if (!isNil "_side") then
   {
     switch (_side) do
