@@ -81,8 +81,7 @@ REL_DeployGroup =
 	{
 		[_player,nil] call REL_RemoveDeployAction; // AGM Interact does not have an actionID
 	};
-	REL_Group_Deployment = [_player,_position];
-	publicVariableServer "REL_Group_Deployment";
+  [["Player: %1 deployed at co-ordinates: %2",_player,_position]] call REL_Server_Log;
 	if (!REL_AlternativeDeployAvailable) then
 	{
 		DECLARE(_side) = side _group; // not used yet.

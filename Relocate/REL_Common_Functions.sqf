@@ -1,5 +1,12 @@
 #include "REL_Macros.h"
 
+REL_Server_Log =
+{
+  FUN_ARGS_1(_message);
+  REL_LogToServer = format ["%1%2",DEBUG_HEADER,(format _message)];
+  publicVariableServer "REL_LogToServer";
+};
+
 REL_IsAdmin =
 {
   FUN_ARGS_1(_player);

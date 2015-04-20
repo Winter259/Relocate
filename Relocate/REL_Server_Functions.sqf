@@ -1,18 +1,12 @@
 #include "REL_Macros.h"
 
-REL_Server_Log =
+REL_EH_AssignServerLoggingEH =
 {
-  FUN_ARGS_1(_message);
-  diag_log format ["%1%2",DEBUG_HEADER,(format _message)];
-};
-
-REL_EH_AssignDeployLogging =
-{
-	"REL_Group_Deployment" addPublicVariableEventHandler
+  // (_this select 0) is the variable name
+  // (_this select 1) is the variable value, arrives already formatted from REL_Server_Log
+  "REL_LogToServer" addPublicVariableEventHandler
 	{
-		//[["%1 attempted to deploy at %2",((_this select 1) select 0),((_this select 1) select 1)]] call REL_Debug_RPT; // Debug is turned off for live play.
-    [((_this select 1) select 0),((_this select 1) select 1)] call REL_Server_Log;
-    //diag_log format ["%1 - RELOCATE LOGGING: %1 deployed at co-ordinates: %2",time,((_this select 1) select 0),((_this select 1) select 1)];
+		diag_log (_this select 1);
 	};
 };
 
