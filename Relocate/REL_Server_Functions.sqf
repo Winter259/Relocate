@@ -1,14 +1,5 @@
 #include "REL_Macros.h"
 
-// Might have to be avoided
-/*
-REL_FindEmptyPosition =
-{
-	FUN_ARGS_(_position_centre);
-	DECLARE(_empty_position) = _position findEmptyPosition
-};
-*/
-
 REL_Server_Log =
 {
   FUN_ARGS_1(_message);
@@ -54,62 +45,34 @@ REL_PlayerIsValid =
 	_valid;
 };
 
-REL_LeaderIsValid =
-{
-	FUN_ARGS_1(_group);
-	DECLARE(_leader) = leader _group;
-	DECLARE(_valid) = [_leader] call REL_PlayerIsValid;
-	_valid;
-};
-
-REL_AssignToLeader =
-{
-	FUN_ARGS_1(_player);
-  PVT_1(_gearClass);
-	if ([_player] call REL_PlayerIsValid) then
-	{
-		if ([_player] call REL_IsLeader) then
-		{
-        [-1, {[_this] call REL_GiveDeployAction;}, _player] call CBA_fnc_globalExecute;
-        [_player,true] call REL_SetDeployAssigned;
-        [["Deploy successfully assigned to: %1!",_player]] call REL_Debug_RPT;
-        [["Deploy successfully assigned to: %1!",_player]] call REL_Server_Log;
-        if ((([_player] call REL_ReturnGearClass) == "ENG") && !([group _player] call REL_EngineerAssignCheck)) then // This is required since all units in Engineer groups are ENG!
-        {
-          [_player,([_player] call REL_GetDeployActionID)] call REL_RemoveDeployAction;
-          [_player,false] call REL_SetDeployAssigned;
-          [["WARNING: DEPLOY REMOVED FROM %1 SINCE ENGINEER GROUP ALREADY HAS DEPLOY ASSIGNED!",_player]] call REL_Debug_RPT;
-        };
-		}
-		else
-		{
-			[_player] call REL_PassOnAction;
-		};
-	};
-};
-
 REL_IsLeader =
 {
 	FUN_ARGS_1(_player);
-	PVT_1(_gearClass);
+	PVT_1(_gear_class);
 	DECLARE(_leader) = false;
-	_gearClass = [_player] call REL_ReturnGearClass;
-	if (!isNil "_gearClass") then
+	_gear_class = [_player] call REL_ReturnGearClass;
+	if (!isNil "_gear_class") then
 	{
-		{
-			if (_gearClass == _x) then
+		if (_gear_class in HULL_LEADER_ARRAY) then
+    {
+      _leader = true;
+    };
+    /*
+    {
+			if (_gear_class == _x) then
 			{
 				_leader = true;
 			};
 		} forEach HULL_LEADER_ARRAY;
-    if ((_gearClass == "ENG") && !([group _player] call REL_EngineerAssignCheck)) then
+    */
+    if ((_gear_class == "ENG") && !([group _player] call REL_EngineerAssignCheck)) then
     {
       // Hacky workaround for ENG teams all taking gear from ENG template
       [["WARNING: ENGINEER DUPLICATE FIX DEPLOYED FOR: %1",_player]] call REL_Debug_RPT;
       [_player] call REL_EngineerDuplicateFix;
     };
-		[["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gearClass,_leader]] call REL_Debug_RPT;
-		[["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gearClass,_leader]] call REL_Debug_Hint;
+		[["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gear_class,_leader]] call REL_Debug_RPT;
+		[["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gear_class,_leader]] call REL_Debug_Hint;
 	}
 	else
 	{
@@ -119,36 +82,63 @@ REL_IsLeader =
 	_leader;
 };
 
+// if not leader, break
+// if leader, check if valid.
+// if leader is valid, add
+// if leader is not valid, pass on
+// pass on: if next guy is not valid, try next guy
+// keep going till no guys left.
 
-
-REL_PassOnAction =
+REL_AssignDeployToLeader =
 {
-	FUN_ARGS_1(_player);
-	DECLARE(_group) = group _player;
-	PVT_2(_i,_unit);
-	[["The leader %1 of group %2 was not valid, passing on the action!",_player,(group _player)]] call REL_Debug_RPT;
-	for "_i" from 0 to ((count (units _group)) - 1) do
-	{
-		_unit = (units _group) select _i;
-		if ([_unit] call REL_PlayerIsValid) exitWith
-		{
-			[["Action has been passed on to: %1",_unit]] call REL_Debug_RPT;
-			//[_unit] call REL_GiveDeployAction;
-			// Has to be run semi-/globally
-			[-1, {[_this] call REL_GiveDeployAction;}, _unit] call CBA_fnc_globalExecute;
-		};
-	};
-	/*
-	{
-		if ([_x] call REL_PlayerIsValid) exitWith
-		{
-			[["Action has been passed on to: %1",_x]] call REL_Debug_Hint;
-			//[_x] call REL_GiveDeployAction;
-			// Has to be run semi-/globally
+  FUN_ARGS_1(_player);
+  DECLARE(_gear_class) = [_player] call REL_ReturnGearClass;
+  if ([_player] call REL_IsLeader) then
+  {
+    if ([_player] call REL_PlayerIsValid) then
+    {
+      //[_player] call REL_GiveDeployAction; // Has to be run semi-/globally
+			[-1, {[_this] call REL_GiveDeployAction;}, _player] call CBA_fnc_globalExecute;
+    }
+    else
+    {
+      [["The leader %1 of group %2 was not valid, passing on the action!",_player,(group _player)]] call REL_Server_Log;
+      [["The leader %1 of group %2 was not valid, passing on the action!",_player,(group _player)]] call REL_Debug_RPT;
+      [["The leader %1 of group %2 was not valid, passing on the action!",_player,(group _player)]] call REL_Debug_Hint;
+      [_player] call REL_PassOnDeployAction;
+    };
+  }
+  else
+  {
+    [["Initial Leader check failed for: %1",_player]] call REL_Debug_RPT;
+    [["Initial Leader check failed for: %1",_player]] call REL_Debug_Hint;
+  };
+};
+
+REL_PassOnDeployAction =
+{
+  FUN_ARGS_1(_leader);
+  DECLARE(_units) = units (group _leader);
+  DECLARE(_valid_unit_found) = false;
+  PVT_1(_i);
+  _units = _units - [_leader];// Remove the leader from the array, can be replaced with find & deleteAt.
+  {
+    if ([_x] call REL_PlayerIsValid) exitWith
+    {
+      _valid_unit_found = true;
+      [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Server_Log;
+      [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Debug_RPT;
+      [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Debug_Hint;
+      //[_x] call REL_GiveDeployAction; // Has to be run semi-/globally
 			[-1, {[_this] call REL_GiveDeployAction;}, _x] call CBA_fnc_globalExecute;
-		};
-	} forEach units _group;
-	*/
+    };
+  } forEach _units;
+  if (!_valid_unit_found) then
+  {
+    [["Alternate valid unit NOT found for group: %1",(group _leader)]] call REL_Server_Log;
+    [["Alternate valid unit NOT found for group: %1",(group _leader)]] call REL_Debug_RPT;
+    [["Alternate valid unit NOT found for group: %1",(group _leader)]] call REL_Debug_Hint;
+  };
 };
 
 REL_GroupHasDeploy =
