@@ -66,16 +66,22 @@ REL_GetDeployActionID =
 REL_ReturnGearClass =
 {
   FUN_ARGS_1(_player);
-  PVT_1(_gearClass);
+  PVT_1(_gear_class);
   if (IS_ARMA2) then
 	{
-		_gearClass = _player getVariable "hull_gear_class";
+		_gear_class = _player getVariable "hull_gear_class";
 	}
 	else
 	{
-		_gearClass = _player getVariable "hull3_gear_class";
+		_gear_class = _player getVariable "hull3_gear_class";
 	};
-  _gearClass;
+  if (isNil "_gear_class") then
+  {
+    [["GEAR CHECK: No valid gear class defined for: %1. Did Hull properly init on the player?",_player]] call REL_Debug_RPT;
+    [["GEAR CHECK: No valid gear class defined for: %1. Did Hull properly init on the player?",_player]] call REL_Debug_Hint;
+    [["GEAR CHECK: No valid gear class defined for: %1. Did Hull properly init on the player?",_player]] call REL_Server_Log;
+  };
+  _gear_class;
 };
 
 REL_ReturnFactionString =

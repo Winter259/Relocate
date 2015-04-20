@@ -42,38 +42,19 @@ REL_PlayerIsValid =
 REL_IsLeader =
 {
 	FUN_ARGS_1(_player);
-	PVT_1(_gear_class);
+	DECLARE(_gear_class) = [_player] call REL_ReturnGearClass;
 	DECLARE(_leader) = false;
-	_gear_class = [_player] call REL_ReturnGearClass;
-	if (!isNil "_gear_class") then
-	{
-		if (_gear_class in HULL_LEADER_ARRAY) then
+  if (!isNil "_gear_class") then
+  {
+    if (_gear_class in HULL_LEADER_ARRAY) then
     {
       _leader = true;
+      [["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gear_class,_leader]] call REL_Debug_RPT;
+      [["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gear_class,_leader]] call REL_Debug_Hint;
+      
     };
-    /*
-    {
-			if (_gear_class == _x) then
-			{
-				_leader = true;
-			};
-		} forEach HULL_LEADER_ARRAY;
-    */
-    if ((_gear_class == "ENG") && !([group _player] call REL_EngineerAssignCheck)) then
-    {
-      // Hacky workaround for ENG teams all taking gear from ENG template
-      [["WARNING: ENGINEER DUPLICATE FIX DEPLOYED FOR: %1",_player]] call REL_Debug_RPT;
-      [_player] call REL_EngineerDuplicateFix;
-    };
-		[["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gear_class,_leader]] call REL_Debug_RPT;
-		[["LEADERSHIP CHECK: %1 has gear class %2. Leader: %3",_player,_gear_class,_leader]] call REL_Debug_Hint;
-	}
-	else
-	{
-		[["GEAR CHECK: No valid gear class defined for: %1",_player]] call REL_Debug_RPT;
-		[["GEAR CHECK: No valid gear class defined for: %1",_player]] call REL_Debug_Hint;
-	};
-	_leader;
+  };
+  _leader;
 };
 
 // if not leader, break
@@ -92,6 +73,7 @@ REL_AssignDeployToLeader =
     if ([_player] call REL_PlayerIsValid) then
     {
       //[_player] call REL_GiveDeployAction; // Has to be run semi-/globally
+      [_player,_gear_class] call REL_AssignEngineerDuplicateFix; // required for engineers
 			[-1, {[_this] call REL_GiveDeployAction;}, _player] call CBA_fnc_globalExecute;
     }
     else
@@ -124,6 +106,7 @@ REL_PassOnDeployAction =
       [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Debug_RPT;
       [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Debug_Hint;
       //[_x] call REL_GiveDeployAction; // Has to be run semi-/globally
+      [_player,([_player] call REL_ReturnGearClass)] call REL_AssignEngineerDuplicateFix; // required for engineers
 			[-1, {[_this] call REL_GiveDeployAction;}, _x] call CBA_fnc_globalExecute;
     };
   } forEach _units;
@@ -140,7 +123,7 @@ REL_GroupHasDeploy =
   FUN_ARGS_1(_group);
   DECLARE(_assigned) = false;
   {
-    if ([_x] call REL_GetDeployAssigned) then
+    if ([_x] call REL_GetDeployAssigned) exitWith
     {
       _assigned = true;
     };

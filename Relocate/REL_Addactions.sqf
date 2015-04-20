@@ -17,7 +17,6 @@ REL_GiveDeployAction =
 		[["Deploy successfully assigned to: %1",_player]] call REL_Server_Log;
     [["Deploy successfully assigned to: %1",_player]] call REL_Debug_RPT;
     [["Deploy successfully assigned to: %1",_player]] call REL_Debug_Hint;
-    [_player,true] call REL_SetDeployAssigned;
     [_player,false] call REL_SetPlayerDeployedStatus; // activates AGM action
 		if (!REL_UseAGMInteract) then
 		{

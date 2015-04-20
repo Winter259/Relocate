@@ -1,25 +1,34 @@
 #include "REL_Macros.h"
 
+REL_AssignEngineerDuplicateFix =
+{
+  FUN_ARGS_2(_player,_gear_class);
+  if ((_gear_class == "ENG") && !([_player] call REL_CheckEngineerGroupForDuplicates)) then
+  {
+    [_player] call REL_EngineerDuplicateFix;
+  };
+};
+
 REL_EngineerDuplicateFix =
 {
   FUN_ARGS_1(_player);
-  // Hacky workaround for ENG teams all taking gear from ENG template
-  _player setVariable ["REL_EngineerDuplicateCheck",true,true];
+  DECLARE(_group) = group _player;
+  // Hacky workaround for ENG teams all taking gear from ENG template, thus being all engineers
+  [_player,true] call REL_SetDeployAssigned;
+  [["WARNING: ENGINEER DUPLICATE FIX DEPLOYED FOR: %1 IN GROUP %2",_player,_group]] call REL_Debug_RPT;
+  [["WARNING: ENGINEER DUPLICATE FIX DEPLOYED FOR: %1 IN GROUP %2",_player,_group]] call REL_Debug_Hint;
+  [["WARNING: ENGINEER DUPLICATE FIX DEPLOYED FOR: %1 IN GROUP %2",_player,_group]] call REL_Server_Log;
 };
 
-REL_EngineerAssignCheck =
+REL_CheckEngineerGroupForDuplicates =
 {
-  FUN_ARGS_1(_group);
-  DECLARE(_already_has_deploy) = false;
-  PVT_1(_deploy_check);
-  // Hacky workaround for ENG teams all taking gear from ENG template
+  FUN_ARGS_1(_player);
+  DECLARE(_group) = group _player;
+  DECLARE(_already_has_deploy) = [_group] call REL_GroupHasDeploy;
+  if (_already_has_deploy) then
   {
-    _deploy_check = _x getVariable ["REL_EngineerDuplicateCheck",false];
-    if (_deploy_check) then
-    {
-      _already_has_deploy = true;
-      [["WARNING: PLAYER %1 IN GROUP %2 ALREADY HAS DEPLOY!",_x,_group]] call REL_Debug_RPT;
-    };
-  } forEach units _group;
+    [["WARNING: GROUP %1 ALREADY HAS DEPLOY!",_group]] call REL_Debug_RPT;
+    [["WARNING: GROUP %1 ALREADY HAS DEPLOY!",_group]] call REL_Debug_Hint;
+  };
   _already_has_deploy;
 };
