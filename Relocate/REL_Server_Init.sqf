@@ -68,4 +68,5 @@ REL_DetermineVersion =
     REL_HullPresent = true;
     publicVariable "REL_HullPresent";
 	};
+  publicVariable "REL_ArmaVersion";
 };
