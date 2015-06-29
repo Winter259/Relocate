@@ -4,9 +4,9 @@
 // null = [] execVM "Relocate\REL_Compile.sqf";
 // to your init.sqf
 
-// IF USING AGM:
+// If using ACE:
 // Add:
-// #include "Relocate\Compat\AGM\REL_AGM_Interact.h";
+// #include "Relocate\ace\REL_ACE_Deploy.hpp"
 // to your description.ext
 
 REL_Group_Deployment = []; // used for logging

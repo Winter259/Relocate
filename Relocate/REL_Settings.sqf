@@ -27,6 +27,6 @@ REL_AlternativeDeploy = {
     [_group,_position] call REL_HaloDeploy;
 };
 
-REL_UseAGMInteract = false;
+REL_useAceInteract = true;
 
 REL_Debug = true;

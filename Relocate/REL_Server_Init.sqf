@@ -31,9 +31,6 @@ REL_Precompile_Functions = {
     [["Performing server init"]] call REL_Debug_Hint;
     PRECOMPILE("Relocate\REL_Server_Functions.sqf");
     PRECOMPILE("Relocate\REL_Addactions.sqf");
-    if (REL_UseAGMInteract) then {
-        PRECOMPILE("Relocate\Compat\AGM\REL_AGM_Functions.sqf");
-    };
 };
 
 REL_DetermineVersion = {

@@ -14,8 +14,8 @@ REL_GiveDeployAction = {
         [["Deploy successfully assigned to: %1",_player]] call REL_Server_Log;
         [["Deploy successfully assigned to: %1",_player]] call REL_Debug_RPT;
         [["Deploy successfully assigned to: %1",_player]] call REL_Debug_Hint;
-        [_player,false] call REL_SetPlayerDeployedStatus; // activates AGM action
-        if (!REL_UseAGMInteract) then {
+        [_player,false] call REL_SetPlayerDeployedStatus; // activates ACE deploy action
+        if (!REL_useAceInteract) then {
             [_player] call REL_GiveDeploy_Addaction;
         };
     };
@@ -23,8 +23,7 @@ REL_GiveDeployAction = {
 
 REL_RemoveDeployAction = {
     FUN_ARGS_2(_player,_actionID);
-    if (!isNil "_actionID") then
-    {
+    if (!isNil "_actionID") then {
         _player removeAction _actionID;
     };
     onMapSingleClick "";

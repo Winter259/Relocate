@@ -1,14 +1,15 @@
-class ACE_SelfActions {
-    class ACE_Relocate {
-        class REL_ACE_Deploy {
-            //displayName = CSTRING(AttachDetach);
-            //condition = QUOTE(_this call FUNC(canAttach));
-            //insertChildren = QUOTE(_this call FUNC(getChildrenAttachActions));
+class Man;
+class CAManBase: Man {
+    class ACE_SelfActions {
+        class ACE_REL_Deploy {
+            displayName = "Deploy Group";
+            condition = "true";
             exceptions[] = {"isNotDragging","isNotSitting","notOnMap"};
-            showDisabled = 0;
+            statement = "";
+            showDisabled = 1;
             priority = 5;
-            //icon = ""; // TODO
-            // hotkey = "D"; 
+            icon = "Relocate/ace/deploy.paa";
+            hotkey = "D";
         };
     };
 };

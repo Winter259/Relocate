@@ -70,7 +70,7 @@ REL_DeployGroup = {
     if (!isNil "_actionID") then {
         [_player,_actionID] call REL_RemoveDeployAction;
     } else {
-        [_player,nil] call REL_RemoveDeployAction; // AGM Interact does not have an actionID
+        [_player,nil] call REL_RemoveDeployAction; // ACE Interact does not have an actionID
     };
     [["Player: %1 deployed at co-ordinates: %2",_player,_position]] call REL_Server_Log;
     if (!REL_AlternativeDeployAvailable) then {
