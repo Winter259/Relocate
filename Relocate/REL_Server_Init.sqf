@@ -33,7 +33,6 @@ REL_Precompile_Functions =
 	PRECOMPILE("Relocate\REL_Debug.sqf");
   [["Performing server init"]] call REL_Debug_RPT;
   [["Performing server init"]] call REL_Debug_Hint;
-	PRECOMPILE("Relocate\REL_EngineerFix.sqf");
 	PRECOMPILE("Relocate\REL_Server_Functions.sqf");
 	PRECOMPILE("Relocate\REL_Addactions.sqf");
 	if (REL_UseAGMInteract) then
