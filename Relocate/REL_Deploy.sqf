@@ -5,12 +5,9 @@ private ["_user"];
 _user = _this select 1;
 //_user removeAction (_this select 2);
 hint "Click anywhere on the map to deploy to that location.";
-if (!(isNull _user) && !(isNil "_user")) then
-{
-  [_user] call REL_AssignDeployClick;
-}
-else
-{
-  [["ERROR! User %1 was considered null/nil for some reason!",_user]] call REL_Debug_RPT;
-  [["ERROR! User %1 was considered null/nil for some reason!",_user]] call REL_Debug_Hint;
+if (!(isNull _user) && !(isNil "_user")) then {
+    [_user] call REL_AssignDeployClick;
+} else {
+    [["ERROR! User %1 was considered null/nil for some reason!",_user]] call REL_Debug_RPT;
+    [["ERROR! User %1 was considered null/nil for some reason!",_user]] call REL_Debug_Hint;
 };

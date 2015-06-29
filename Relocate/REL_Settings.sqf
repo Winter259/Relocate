@@ -7,7 +7,7 @@ REL_AllowDeploy_OPF 	= true;
 REL_AllowDeploy_IND 	= true;
 REL_AllowDeploy_CIV 	= false;
 
-// If true, a logged in host will have an addaction to enable pre safety off deploy.
+// If true, a logged in host will have an addAction to enable pre safety off deploy.
 REL_AllowPreSafetyDeploy = true;
 
 // If true, it will allow a whole faction to deploy BEFORE hull safety is turned off.
@@ -21,11 +21,10 @@ REL_AllowPresafetyDeploy_CIV = false;
 // Alternative deploy allows for the addition of any custom deploy code that will be executed instead of the usual deploy, can be anything from starting AI camps to a HALO drop.
 REL_AlternativeDeployAvailable = false;
 
-REL_AlternativeDeploy = 
-{
-	FUN_ARGS_2(_group,_position);
-  // Example: HALO deployment script, makes the player's group do a HALO jump instead of a magic teleport
-  [_group,_position] call REL_HaloDeploy;
+REL_AlternativeDeploy = {
+    FUN_ARGS_2(_group,_position);
+    // Example: HALO deployment script, makes the player's group do a HALO jump instead of a magic teleport
+    [_group,_position] call REL_HaloDeploy;
 };
 
 REL_UseAGMInteract = false;

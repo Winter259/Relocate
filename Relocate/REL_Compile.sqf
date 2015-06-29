@@ -16,15 +16,13 @@ PRECOMPILE("Relocate\REL_Settings.sqf"); // Used for custom deploy functions and
 PRECOMPILE("Relocate\REL_Common_Functions.sqf"); // Used by both server and client
 
 // Server Init
-if (isServer) then
-{
-	PRECOMPILE("Relocate\REL_Server_Init.sqf");
-	[] call REL_Server_Init;
+if (isServer) then {
+    PRECOMPILE("Relocate\REL_Server_Init.sqf");
+    [] call REL_Server_Init;
 };
 
 // Client Init + SP Init
-if (!isServer || !isMultiplayer) then
-{
-	PRECOMPILE("Relocate\REL_Client_Init.sqf");
-  [] call REL_Client_Init;
+if (!isServer || !isMultiplayer) then {
+    PRECOMPILE("Relocate\REL_Client_Init.sqf");
+    [] call REL_Client_Init;
 };
