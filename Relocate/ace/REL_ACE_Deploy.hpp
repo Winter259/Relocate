@@ -1,6 +1,6 @@
 class ACE_SelfActions {
     class ACE_Relocate {
-        class ACE_REL_Deploy {
+        class REL_ACE_Deploy {
             //displayName = CSTRING(AttachDetach);
             //condition = QUOTE(_this call FUNC(canAttach));
             //insertChildren = QUOTE(_this call FUNC(getChildrenAttachActions));
