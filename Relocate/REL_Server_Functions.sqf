@@ -64,58 +64,46 @@ REL_IsLeader =
 // pass on: if next guy is not valid, try next guy
 // keep going till no guys left.
 
-REL_AssignDeployToLeader =
-{
-  FUN_ARGS_1(_player);
-  DECLARE(_gear_class) = [_player] call REL_ReturnGearClass;
-  if ([_player] call REL_IsLeader) then
-  {
-    if (([_player] call REL_PlayerIsValid) && !([_player] call REL_CheckEngineerGroupForDuplicates)) then
-    {
-      //[_player] call REL_GiveDeployAction; // Has to be run semi-/globally
-      [_player,_gear_class] call REL_AssignEngineerDuplicateFix; // required for engineers
-			[-1, {[_this] call REL_GiveDeployAction;}, _player] call CBA_fnc_globalExecute;
-    }
-    else
-    {
-      [["The leader %1 of group %2 was not valid, passing on the action!",_player,(group _player)]] call REL_Server_Log;
-      [["The leader %1 of group %2 was not valid, passing on the action!",_player,(group _player)]] call REL_Debug_RPT;
-      [["The leader %1 of group %2 was not valid, passing on the action!",_player,(group _player)]] call REL_Debug_Hint;
-      [_player] call REL_PassOnDeployAction;
+REL_AssignDeployToLeader = {
+    FUN_ARGS_1(_player);
+    DECLARE(_gear_class) = [_player] call REL_ReturnGearClass;
+    if ([_player] call REL_IsLeader) then {
+        if ([_player] call REL_PlayerIsValid) then {
+          //[_player] call REL_GiveDeployAction; // Has to be run semi-/globally
+            [-1, {[_this] call REL_GiveDeployAction;}, _player] call CBA_fnc_globalExecute;
+        } else {
+            [["The leader %1 of group %2 was not valid, passing on the action!",_player,(group _player)]] call REL_Server_Log;
+            [["The leader %1 of group %2 was not valid, passing on the action!",_player,(group _player)]] call REL_Debug_RPT;
+            [["The leader %1 of group %2 was not valid, passing on the action!",_player,(group _player)]] call REL_Debug_Hint;
+            [_player] call REL_PassOnDeployAction;
+        };
+    } else {
+        [["Initial Leader check failed for: %1",_player]] call REL_Debug_RPT;
+        [["Initial Leader check failed for: %1",_player]] call REL_Debug_Hint;
     };
-  }
-  else
-  {
-    [["Initial Leader check failed for: %1",_player]] call REL_Debug_RPT;
-    [["Initial Leader check failed for: %1",_player]] call REL_Debug_Hint;
-  };
 };
 
-REL_PassOnDeployAction =
-{
-  FUN_ARGS_1(_leader);
-  DECLARE(_units) = units (group _leader);
-  DECLARE(_valid_unit_found) = false;
-  PVT_1(_i);
-  _units = _units - [_leader];// Remove the leader from the array, can be replaced with find & deleteAt.
-  {
-    if (([_x] call REL_PlayerIsValid) && !([_x] call REL_CheckEngineerGroupForDuplicates)) exitWith
+REL_PassOnDeployAction = {
+    FUN_ARGS_1(_leader);
+    DECLARE(_units) = units (group _leader);
+    DECLARE(_valid_unit_found) = false;
+    PVT_1(_i);
+    _units = _units - [_leader];// Remove the leader from the array, can be replaced with find & deleteAt.
     {
-      _valid_unit_found = true;
-      [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Server_Log;
-      [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Debug_RPT;
-      [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Debug_Hint;
-      //[_x] call REL_GiveDeployAction; // Has to be run semi-/globally
-      [_player,([_player] call REL_ReturnGearClass)] call REL_AssignEngineerDuplicateFix; // required for engineers
-			[-1, {[_this] call REL_GiveDeployAction;}, _x] call CBA_fnc_globalExecute;
+        if ([_x] call REL_PlayerIsValid) exitWith {
+            _valid_unit_found = true;
+            [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Server_Log;
+            [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Debug_RPT;
+            [["Alternate valid unit found: %1 for group: %2",_x,(group _x)]] call REL_Debug_Hint;
+            //[_x] call REL_GiveDeployAction; // Has to be run semi-/globally
+            [-1, {[_this] call REL_GiveDeployAction;}, _x] call CBA_fnc_globalExecute;
+        };
+    } forEach _units;
+    if (!_valid_unit_found) then {
+        [["Alternate valid unit NOT found for group: %1",(group _leader)]] call REL_Server_Log;
+        [["Alternate valid unit NOT found for group: %1",(group _leader)]] call REL_Debug_RPT;
+        [["Alternate valid unit NOT found for group: %1",(group _leader)]] call REL_Debug_Hint;
     };
-  } forEach _units;
-  if (!_valid_unit_found) then
-  {
-    [["Alternate valid unit NOT found for group: %1",(group _leader)]] call REL_Server_Log;
-    [["Alternate valid unit NOT found for group: %1",(group _leader)]] call REL_Debug_RPT;
-    [["Alternate valid unit NOT found for group: %1",(group _leader)]] call REL_Debug_Hint;
-  };
 };
 
 REL_GroupHasDeploy =
